@@ -33,7 +33,6 @@ public class Building extends JLabel implements MouseListener {
 	public static void regeneration() {
 		for (Building x : Building.buildingsArray) {
 			if (x.Captured && x.health < 30) {
-				System.out.println("Caped");
 				x.health++;
 			} else if (!x.Captured && x.health < 50) {
 				x.health++;
@@ -78,7 +77,6 @@ public class Building extends JLabel implements MouseListener {
 		setyPosition(y);
 		this.setLayout(null);
 
-		System.out.println(team);
 		sprites = new Sprite(team);
 
 		this.setIcon(new ImageIcon(sprites.idle));

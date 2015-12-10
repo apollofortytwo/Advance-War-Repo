@@ -17,17 +17,17 @@ public class StartScreen extends JFrame implements ActionListener {
 
 		this.setSize(1080, 720);
 		this.setLayout(null);
-		this.setVisible(true);
+		
 		title();
 		options();
-
+		this.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand() == "NEW") {
-			MapSelection.mapSelection();
-			this.dispose();
+			mapSelectionScreen();
+			
 		} else {
 			try {
 				new LoadGame();
@@ -40,7 +40,50 @@ public class StartScreen extends JFrame implements ActionListener {
 
 	}
 
-	public void options() {
+	private void mapSelectionScreen(){
+		this.getContentPane().removeAll();
+		this.getContentPane().repaint();
+		
+		this.setLayout(new GridLayout(2, 0));
+
+		JButton mobaMap = new JButton("MOBA");
+		mobaMap.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MapLoader.setMap("MOBA");
+				Application.game();
+				return;
+			}
+
+		});
+		JButton large = new JButton("Large");
+		large.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MapLoader.setMap("Large");
+				Application.size = new double[][] {
+						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+								32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
+						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
+				};
+				;
+				Application.setTable();
+				Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
+				Application.game();
+				return;
+			}
+
+		});
+
+		this.add(mobaMap);
+		this.add(large);
+		
+		this.revalidate();
+		this.getContentPane().repaint();
+	}
+	
+	
+	private void options() {
 		JPanel optionsPanel = new JPanel();
 		GridLayout g = new GridLayout(2, 0);
 		g.setVgap(50);

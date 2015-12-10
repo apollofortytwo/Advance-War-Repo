@@ -15,7 +15,7 @@ public class SaveGame {
 		}
 
 		Save save = new Save();
-		save.map = MapSelection.getMap();
+		save.map = MapLoader.getMap();
 		save.size = Application.size;
 
 		save.setList(SaveObject.Units);

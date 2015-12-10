@@ -113,7 +113,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 		Interface.unitPanel.remove(this);
 		Interface.unitPanel.revalidate();
 		Interface.unitPanel.repaint();
-		if (this.team == "Blue") {
+		if (this.team.equals("Blue")) {
 			Interface.redTeamInfo.increaseNumberOfKills();
 		} else {
 			Interface.blueTeamInfo.increaseNumberOfKills();
@@ -169,7 +169,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 			this.attackUnit();
 		}
 
-		if (this.team == TurnPanelLabel.turnText) {
+		if (this.team.equals(TurnPanelLabel.turnLabel)) {
 			Interface.restore();
 			Interface.addUnitInfo(this);
 			Unit.setSelectedUnit(this);
@@ -246,9 +246,9 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	}
 
 	private void setEnemy() {
-		if (team == "Blue")
+		if (team.equals("Blue"))
 			this.enemy = "Red";
-		if (team == "Red")
+		if (team.equals("Red"))
 			this.enemy = "Blue";
 	}
 

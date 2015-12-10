@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class MapSelection {
+public class MapLoader {
 
 	private static String map;
 
@@ -13,9 +13,14 @@ public class MapSelection {
 		return map;
 	}
 
-	public static void mapCreation() {
-		if (getMap() == "MOBA") {
-
+	public MapLoader() {
+		
+		System.out.println(getMap());	
+		
+		if (getMap().equals("MOBA")) {
+			
+			System.out.println("LOADING MOBA");
+			
 			Terrain.fillScreenWithTerrain("GRASS");
 
 			int[] xTree = { 1, 1, 3, 3, 5, 6, 8, 9, 10, 12, 13, 14, 13, 12, 10, 11, 8, 7, 6, 8, 3, 2, 2, 3, 2, 2, 2, 2,
@@ -95,68 +100,33 @@ public class MapSelection {
 
 			return;
 		} else if (getMap() == "Large") {
+			Application.size = new double[][] {
+					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+							32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
+					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
+			};
+			;
 			Terrain.fillScreenWithTerrain("GRASS");
 		}
 
 	}
 
-	public static void mapSelection() {
-
-		JFrame frame = new JFrame("Advanced wars");
-		frame.setSize(1080, 720);
-		frame.setLayout(new GridLayout(2, 0));
-		frame.setVisible(true);
-
-		JButton mobaMap = new JButton("MOBA");
-		mobaMap.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				setMap("MOBA");
-				Application.size = new double[][] {
-						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
-						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
-				};
-				;
-				Application.setTable();
-				Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
-
-				frame.dispose();
-				Application.game();
-				return;
-			}
-
-		});
-		JButton large = new JButton("Large");
-		large.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				setMap("Large");
-				Application.size = new double[][] {
-						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-								32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
-						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
-				};
-				;
-				Application.setTable();
-				Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
-
-				frame.dispose();
-				Application.game();
-				return;
-			}
-
-		});
-
-		frame.add(mobaMap);
-		frame.add(large);
-
-	}
 
 	/**
 	 * @param map
 	 *            the map to set
 	 */
 	public static void setMap(String map) {
-		MapSelection.map = map;
+		MapLoader.map = map; 
+		if(map.equals("MOBA")){
+			Application.size = new double[][] {
+					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
+					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
+			};
+			;
+			Application.setTable();
+			Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
+		}
+
 	}
 }

@@ -32,7 +32,7 @@ public class Interface {
 
 	public static void addBuildingInfo(Building building) {
 		System.out.println(building.getTeam());
-		if (building.getTeam() == "Blue") {
+		if (building.getTeam().equals("Blue")) {
 			if (Unit.selectedUnit == null) {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(building.buildingPanel, BorderLayout.CENTER);
@@ -40,7 +40,7 @@ public class Interface {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(building.buildingPanel, BorderLayout.CENTER);
 			}
-		} else if (building.getTeam() == "Red") {
+		} else if (building.getTeam().equals("Red")) {
 			if (Unit.selectedUnit == null) {
 				redTeamInfoContainer.removeAll();
 				redTeamInfoContainer.add(building.buildingPanel, BorderLayout.CENTER);
@@ -59,19 +59,19 @@ public class Interface {
 
 	public static void addUnitInfo(Unit unit) {
 
-		if (unit.getTeam() == "Blue") {
+		if (unit.getTeam().equals("Blue") ) {
 			if (Building.selectedBuilding == null) {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
-			} else if (Building.selectedBuilding != null && Building.selectedBuilding.getTeam() != unit.getTeam()) {
+			} else if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
 			}
-		} else if (unit.getTeam() == "Red") {
+		} else if (unit.getTeam().equals("Red")) {
 			if (Building.selectedBuilding == null) {
 				redTeamInfoContainer.removeAll();
 				redTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
-			} else if (Building.selectedBuilding != null && Building.selectedBuilding.getTeam() != unit.getTeam()) {
+			} else if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				redTeamInfoContainer.removeAll();
 				redTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
 			}
@@ -104,10 +104,6 @@ public class Interface {
 	}
 
 	public static void initalize() {
-		tilePanel = new TablePanel();
-		unitPanel = new TablePanel();
-		attackingSpritePanel = new TablePanel();
-
 		blueTeamInfo = new TeamStatPanel("Blue");
 
 		blueTeamInfoContainer.setSize(blueTeamInfoContainer.getPreferredSize());
@@ -125,6 +121,11 @@ public class Interface {
 		turnPanels.add(TurnPanelLabel.timeCounter);
 
 		JLayeredPane layer = new JLayeredPane();
+		
+		tilePanel = new TablePanel();
+		unitPanel = new TablePanel();
+		attackingSpritePanel = new TablePanel();
+
 		layer.add(Interface.tilePanel, new Integer(1));
 		layer.add(Interface.unitPanel, new Integer(10));
 		layer.add(Interface.attackingSpritePanel, new Integer(100));
@@ -136,14 +137,14 @@ public class Interface {
 
 	public static void remove(String team) {
 		if (Unit.selectedUnit != null) {
-			if (Unit.selectedUnit.getTeam() == team) {
+			if (Unit.selectedUnit.getTeam().equals(team)) {
 				return;
 			}
 		}
-		if (team == "Blue") {
+		if (team.equals("Blue")) {
 			blueTeamInfoContainer.removeAll();
 			blueTeamInfoContainer.add(blueTeamInfo, BorderLayout.CENTER);
-		} else if (team == "Red") {
+		} else if (team.equals("Red")) {
 			redTeamInfoContainer.removeAll();
 			redTeamInfoContainer.add(redTeamInfo, BorderLayout.CENTER);
 		}

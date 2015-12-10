@@ -4,15 +4,13 @@ import java.io.Serializable;
 
 public class UnitInfo implements Serializable {
 	public static int getProductionTime(String unit) {
-		if (unit == "TANK") {
+		if (unit.equals("TANK")) {
 			return 10;
-		} else if (unit == "ARTILLERY") {
+		} else if (unit.equals("ARTILLERY") ) {
 			return 15;
-		} else if (unit == "INFANTRY") {
+		} else if (unit.equals("INFANTRY")) {
 			return 3;
-		} else if (unit == "ENGINNER") {
-			return 1;
-		} else if (unit == "HELICOPTER") {
+		}else if (unit.equals("HELICOPTER")) {
 			return 8;
 		} else {
 			return 100;
@@ -29,56 +27,61 @@ public class UnitInfo implements Serializable {
 		this.range = this.getUnitRangeInfo(unit);
 	}
 
-	public int getUnitAttackInfo(String Unit) {
-		if (Unit == "TANK") {
+	public static int getUnitAttackInfo(String unit) {
+		if (unit.equals("TANK")) {
 			return 10;
-		} else if (Unit == "INFANTRY") {
+		} else if (unit.equals("ARTILLERY") ) {
 			return 5;
-		} else if (Unit == "HELICOPTER") {
+		} else if (unit.equals("INFANTRY")) {
 			return 5;
-		} else if (Unit == "ARTILLERY") {
+		}else if (unit.equals("HELICOPTER")) {
 			return 5;
+		} else {
+			return 0;
 		}
-		return 0;
 	}
 
-	public int getUnitHealthInfo(String Unit) {
-		if (Unit == "TANK") {
+
+	public static int getUnitHealthInfo(String unit) {
+		if (unit.equals("TANK")) {
 			return 20;
-		} else if (Unit == "INFANTRY") {
+		} else if (unit.equals("ARTILLERY") ) {
 			return 10;
-		} else if (Unit == "HELICOPTER") {
+		} else if (unit.equals("INFANTRY")) {
 			return 15;
-		} else if (Unit == "ARTILLERY") {
+		}else if (unit.equals("HELICOPTER")) {
 			return 10;
+		} else {
+			return 0;
 		}
-		return 0;
 	}
 
-	public int getUnitMovementInfo(String Unit) {
-		if (Unit == "TANK") {
+	public static int getUnitMovementInfo(String unit) {
+		if (unit.equals("TANK")) {
 			return 3;
-		} else if (Unit == "INFANTRY") {
+		} else if (unit.equals("ARTILLERY") ) {
 			return 3;
-		} else if (Unit == "HELICOPTER") {
+		} else if (unit.equals("INFANTRY")) {
 			return 5;
-		} else if (Unit == "ARTILLERY") {
+		}else if (unit.equals("HELICOPTER")) {
 			return 2;
+		} else {
+			return 0;
 		}
-		return 0;
 	}
 
-	public int getUnitRangeInfo(String Unit) {
-		if (Unit == "TANK") {
+	public static int getUnitRangeInfo(String unit) {
+		if (unit.equals("TANK")) {
 			return 3;
-		} else if (Unit == "INFANTRY") {
+		} else if (unit.equals("ARTILLERY") ) {
 			return 2;
-		} else if (Unit == "HELICOPTER") {
+		} else if (unit.equals("INFANTRY")) {
 			return 3;
-		} else if (Unit == "ARTILLERY") {
+		}else if (unit.equals("HELICOPTER")) {
 			return 5;
+		} else {
+			return 0;
 		}
-		return 0;
 	}
 
 }
