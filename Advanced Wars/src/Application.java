@@ -11,7 +11,7 @@ import javax.sound.sampled.FloatControl;
  * 		Move units and destroy the other players Bases while you protect your own.
  * 		Grid style, Turn-Based, Strategy game
  * 
- * @author Bryan
+ * @author ApolloFortyTwo
  *
  */
 public class Application {
