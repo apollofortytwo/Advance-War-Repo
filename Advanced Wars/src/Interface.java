@@ -7,6 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+/**
+ * acts as a display port for the classes
+ * Holds the mainFrame (Frame that holds the game)
+ * holds the game table for the game
+ * manages the changes between the information being present on the sides
+ * 
+ * @author ApolloFortyTwo
+ *
+ */
 public class Interface {
 
 	public static JFrame mainFrame;
