@@ -1,7 +1,104 @@
 
-
 public class PathFinders {
-	public static void attack(int x, int y, int range) {
+	
+	/**
+	 * Display the selected Units movement action, or attack action range
+	 * 
+	 */
+	public static void selectedUnit() {
+		if (Unit.SelectedUnitActionPhase) {
+			selectedUnitAttack();
+			return;
+		}
+		if (!Unit.selectedUnit.isAttacked() && !Unit.selectedUnit.isMoved()) {
+			if (Unit.selectedUnit.getType().equals("HELICOPTER")) {
+				PathFinders.fly(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
+						Unit.selectedUnit.info.movement);
+			} else {
+				PathFinders.move(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
+						Unit.selectedUnit.info.movement);
+			}
+		} else if (!Unit.selectedUnit.isAttacked() && Unit.selectedUnit.isMoved()) {
+			PathFinders.attack(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
+					Unit.selectedUnit.info.range);
+		}
+	}
+	
+	public static void Hover(Unit unit) {
+
+		if (Unit.SelectedUnitActionPhase) {
+			return;
+		}
+
+		if (!unit.isAttacked() && !unit.isMoved() || !unit.getTeam().equals(TurnPanel.turnText)) {
+			Interface.addUnitInfo(unit);
+			if (unit.getType().equals("HELICOPTER")) {
+				PathFinders.flyingHover(unit.getxPosition(), unit.getyPosition(), unit.info.movement, unit.info.range);
+			} else {
+				PathFinders.hover(unit.getxPosition(), unit.getyPosition(), unit.info.movement, unit.info.range);
+			}
+		} else if (!unit.isAttacked() && unit.isMoved() || unit.getTeam() != TurnPanel.turnText) {
+			PathFinders.hoverAttack(unit.getxPosition(), unit.getyPosition(), unit.info.range);
+		}
+	}
+	
+	/**
+	 * 
+	 * 	shows and allow the terrains the change the
+	 *  properties to allow for neutral buildings to become buildings
+	 *  based on the location of the selectedUnit
+	 * 
+	 * @param x		(X position of the selected Unit)
+	 * @param y		(Y position of the selected Unit)
+	 */
+	public static void capture(int x, int y) {
+		System.out.println("Capture");
+		try {
+			Terrain.terrainArray[x + 1][y].highlight("CAPTURE");
+		} catch (Exception e) {
+
+		}
+		try {
+			Terrain.terrainArray[x - 1][y].highlight("CAPTURE");
+		} catch (Exception e) {
+
+		}
+		try {
+			Terrain.terrainArray[x][y + 1].highlight("CAPTURE");
+		} catch (Exception e) {
+
+		}
+		try {
+			Terrain.terrainArray[x][y - 1].highlight("CAPTURE");
+		} catch (Exception e) {
+
+		}
+
+		Interface.tilePanel.repaint();
+		Interface.tilePanel.revalidate();
+	}
+
+	/**
+	 * Gives the possible range for attack for selectedUnits 
+	 * 
+	 */
+	public static void selectedUnitAttack() {
+		PathFinders.attack(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
+				Unit.selectedUnit.info.range);
+
+	}
+	
+/** -----------------------------------------------------------------------------------------------
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+	private static void attack(int x, int y, int range) {
 		Unit.SelectedUnitActionPhase = true;
 		if (range > 0) {
 			try {
@@ -35,16 +132,7 @@ public class PathFinders {
 
 	}
 
-	public static void capture(int x, int y) {
-		System.out.println("Capture");
-		Terrain.terrainArray[x + 1][y].highlight("CAPTURE");
-		Terrain.terrainArray[x - 1][y].highlight("CAPTURE");
-		Terrain.terrainArray[x][y + 1].highlight("CAPTURE");
-		Terrain.terrainArray[x][y - 1].highlight("CAPTURE");
 
-		Interface.tilePanel.repaint();
-		Interface.tilePanel.revalidate();
-	}
 
 	private static void fly(int x, int y, int movement) {
 		if (movement > 0) {
@@ -170,24 +258,6 @@ public class PathFinders {
 		}
 	}
 
-	public static void Hover(Unit unit) {
-
-		if (Unit.SelectedUnitActionPhase) {
-			return;
-		}
-
-		if (!unit.isAttacked() && !unit.isMoved() || unit.getTeam() != TurnPanelLabel.turnText) {
-			Interface.addUnitInfo(unit);
-			if (unit.getType() == "HELICOPTER") {
-				PathFinders.flyingHover(unit.getxPosition(), unit.getyPosition(), unit.info.movement, unit.info.range);
-			} else {
-				PathFinders.hover(unit.getxPosition(), unit.getyPosition(), unit.info.movement, unit.info.range);
-			}
-		} else if (!unit.isAttacked() && unit.isMoved() || unit.getTeam() != TurnPanelLabel.turnText) {
-			PathFinders.hoverAttack(unit.getxPosition(), unit.getyPosition(), unit.info.range);
-		}
-	}
-
 	private static void hoverAttack(int x, int y, int range) {
 		if (range > 0) {
 			try {
@@ -276,29 +346,6 @@ public class PathFinders {
 		}
 	}
 
-	public static void selectedUnit() {
-		if (Unit.SelectedUnitActionPhase) {
-			selectedUnitAttack();
-			return;
-		}
-		if (!Unit.selectedUnit.isAttacked() && !Unit.selectedUnit.isMoved()) {
-			if (Unit.selectedUnit.getType() == "HELICOPTER") {
-				PathFinders.fly(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
-						Unit.selectedUnit.info.movement);
-			} else {
-				PathFinders.move(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
-						Unit.selectedUnit.info.movement);
-			}
-		} else if (!Unit.selectedUnit.isAttacked() && Unit.selectedUnit.isMoved()) {
-			PathFinders.attack(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
-					Unit.selectedUnit.info.range);
-		}
-	}
 
-	public static void selectedUnitAttack() {
-		PathFinders.attack(Unit.selectedUnit.getxPosition(), Unit.selectedUnit.getyPosition(),
-				Unit.selectedUnit.info.range);
-
-	}
 
 }

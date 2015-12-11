@@ -2,9 +2,10 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
+
 /**
- * Coupled with any game Entity
- * Displays the health of the entity on the sprite
+ * Coupled with any game Entity Displays the health of the entity on the sprite
+ * 
  * @author ApolloFortyTwo
  *
  */
@@ -21,6 +22,12 @@ public class HealthLabel extends JLabel {
 
 	}
 
+	public void reset(int health){
+		green = (int) (health / 1.2);
+		yellow = (int) (health / 1.5);
+		red = health / 3;
+		this.updateHealth(health);
+	}
 	public int getGreen() {
 		return green;
 	}
@@ -51,7 +58,7 @@ public class HealthLabel extends JLabel {
 			this.setForeground(Color.green);
 		} else if (health >= yellow) {
 			this.setForeground(Color.yellow);
-		} else if (health >= red) {
+		} else if (health <= red) {
 			this.setForeground(Color.red);
 		}
 	}

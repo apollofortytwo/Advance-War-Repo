@@ -3,11 +3,10 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+
 /**
- * 									Advanced Wars
- * Game:		
- * 		Move units and destroy the other players Bases while you protect your own.
- * 		Grid style, Turn-Based, Strategy game
+ * Advanced Wars Game: Move units and destroy the other players Bases while you
+ * protect your own. Grid style, Turn-Based, Strategy game
  * 
  * @author ApolloFortyTwo
  *
@@ -34,25 +33,24 @@ public class Application {
 	public static void game() {
 		System.out.println("Loading");
 		start.dispose();
-		
+
 		Interface.frame();
 
 		Interface.initalize();
 
 		new MapLoader();
-		
-		new MapUnitLoader(MapLoader.getMap());
-		
+
+		new MapEntityLoader(MapLoader.getMap());
+
 		Interface.blueTeamInfo.updateUnitInfo();
 		Interface.redTeamInfo.updateUnitInfo();
 
-		TurnPanelLabel.turnPanelStart();
-
+		TurnPanel.endTurn();
+		TurnPanel.turnPanelStart();
+		
 		playMusic();
 
 	}
-
-
 
 	public static void main(String[] args) {
 		start = new StartScreen();

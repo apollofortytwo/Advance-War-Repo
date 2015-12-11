@@ -1,10 +1,3 @@
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
 public class MapLoader {
 
 	private static String map;
@@ -14,13 +7,11 @@ public class MapLoader {
 	}
 
 	public MapLoader() {
-		
-		System.out.println(getMap());	
-		
+
 		if (getMap().equals("MOBA")) {
-			
+
 			System.out.println("LOADING MOBA");
-			
+
 			Terrain.fillScreenWithTerrain("GRASS");
 
 			int[] xTree = { 1, 1, 3, 3, 5, 6, 8, 9, 10, 12, 13, 14, 13, 12, 10, 11, 8, 7, 6, 8, 3, 2, 2, 3, 2, 2, 2, 2,
@@ -66,43 +57,12 @@ public class MapLoader {
 				Terrain.terrainArray[xConcrete[i]][yConcrete[i]] = new Terrain(xConcrete[i], yConcrete[i], "CONCRETE");
 
 			}
-			int[] xRedBuilding = { 17, 19, 19 };
-			int[] yRedBuilding = { 0, 0, 2 };
-
-			for (int i = 0; i != xRedBuilding.length; i++) {
-
-				if (Terrain.terrainArray[xRedBuilding[i]][yRedBuilding[i]] != null) {
-					Interface.tilePanel.remove(Terrain.terrainArray[xRedBuilding[i]][yRedBuilding[i]]);
-				}
-				Building.buildingsArray.add((new Building(xRedBuilding[i], yRedBuilding[i], "Red")));
-			}
-			int[] xBlueBuilding = { 0, 0, 2 };
-			int[] yBlueBuilding = { 17, 19, 19 };
-
-			for (int i = 0; i != xBlueBuilding.length; i++) {
-
-				if (Terrain.terrainArray[xBlueBuilding[i]][yBlueBuilding[i]] != null) {
-					Interface.tilePanel.remove(Terrain.terrainArray[xBlueBuilding[i]][yBlueBuilding[i]]);
-				}
-				Building.buildingsArray.add((new Building(xBlueBuilding[i], yBlueBuilding[i], "Blue")));
-			}
-
-			int[] xNeutralBuilding = { 2, 7, 12, 17 };
-			int[] yNeutralBuilding = { 2, 5, 14, 17 };
-
-			for (int i = 0; i != xNeutralBuilding.length; i++) {
-
-				if (Terrain.terrainArray[xNeutralBuilding[i]][yNeutralBuilding[i]] != null) {
-					Interface.tilePanel.remove(Terrain.terrainArray[xNeutralBuilding[i]][yNeutralBuilding[i]]);
-				}
-				NeutralBuilding.buildingsArray.add((new NeutralBuilding(xNeutralBuilding[i], yNeutralBuilding[i])));
-			}
 
 			return;
 		} else if (getMap() == "Large") {
 			Application.size = new double[][] {
-					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-							32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
+					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+							32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
 					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
 			};
 			;
@@ -111,14 +71,13 @@ public class MapLoader {
 
 	}
 
-
 	/**
 	 * @param map
 	 *            the map to set
 	 */
 	public static void setMap(String map) {
-		MapLoader.map = map; 
-		if(map.equals("MOBA")){
+		MapLoader.map = map;
+		if (map.equals("MOBA")) {
 			Application.size = new double[][] {
 					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
 					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;

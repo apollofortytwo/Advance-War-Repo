@@ -8,10 +8,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 /**
- * acts as a display port for the classes
- * Holds the mainFrame (Frame that holds the game)
- * holds the game table for the game
- * manages the changes between the information being present on the sides
+ * acts as a display port for the classes Holds the mainFrame (Frame that holds
+ * the game) holds the game table for the game manages the changes between the
+ * information being present on the sides
  * 
  * @author ApolloFortyTwo
  *
@@ -59,21 +58,23 @@ public class Interface {
 
 	public static void addUnitInfo(Unit unit) {
 
-		if (unit.getTeam().equals("Blue") ) {
+		if (unit.getTeam().equals("Blue")) {
 			if (Building.selectedBuilding == null) {
 				blueTeamInfoContainer.removeAll();
-				blueTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
-			} else if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
+				blueTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
+			} else if (Building.selectedBuilding != null
+					&& !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				blueTeamInfoContainer.removeAll();
-				blueTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
+				blueTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
 			}
 		} else if (unit.getTeam().equals("Red")) {
 			if (Building.selectedBuilding == null) {
 				redTeamInfoContainer.removeAll();
-				redTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
-			} else if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
+				redTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
+			} else if (Building.selectedBuilding != null
+					&& !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				redTeamInfoContainer.removeAll();
-				redTeamInfoContainer.add(unit.unitPanel, BorderLayout.CENTER);
+				redTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
 			}
 		}
 		blueTeamInfoContainer.revalidate();
@@ -116,12 +117,12 @@ public class Interface {
 		mainFrame.add(redTeamInfoContainer, BorderLayout.EAST);
 
 		JPanel turnPanels = new JPanel();
-		turnPanels.add(TurnPanelLabel.turnsElapsedLabel);
-		turnPanels.add(TurnPanelLabel.turnLabel);
-		turnPanels.add(TurnPanelLabel.timeCounter);
+		turnPanels.add(TurnPanel.turnsElapsedLabel);
+		turnPanels.add(TurnPanel.turnLabel);
+		turnPanels.add(TurnPanel.timeCounter);
 
 		JLayeredPane layer = new JLayeredPane();
-		
+
 		tilePanel = new TablePanel();
 		unitPanel = new TablePanel();
 		attackingSpritePanel = new TablePanel();
@@ -138,6 +139,11 @@ public class Interface {
 	public static void remove(String team) {
 		if (Unit.selectedUnit != null) {
 			if (Unit.selectedUnit.getTeam().equals(team)) {
+				return;
+			}
+		}
+		if (Building.selectedBuilding != null) {
+			if (Building.selectedBuilding.getTeam().equals(team)) {
 				return;
 			}
 		}

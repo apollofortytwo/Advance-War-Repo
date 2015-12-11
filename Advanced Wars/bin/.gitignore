@@ -31,7 +31,6 @@
 /Interface.class
 /LoadGame.class
 /MapLoader.class
-/MapUnitLoader.class
 /NeutralBuilding.class
 /PathFinders.class
 /RedArtillery.png
@@ -70,3 +69,9 @@
 /Water_Blue.png
 /Water_Red.png
 /layout/
+/war.wav
+/MapUnitLoader.class
+/TurnPanel.class
+/TurnPanel$1.class
+/MapEntityLoader.class
+/SaveObject.class

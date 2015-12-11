@@ -1,5 +1,4 @@
 
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,6 +23,10 @@ public class UnitInfoPanel extends JPanel implements MouseListener {
 
 	private JButton capture;
 
+	/**
+	 * holds and displays an individual Units information on the Team Information Container 
+	 * @param unit	(Unit that's information will be held and displayed)
+	 */
 	public UnitInfoPanel(Unit unit) {
 		this.unit = unit;
 		this.team = unit.getTeam();
@@ -44,7 +47,7 @@ public class UnitInfoPanel extends JPanel implements MouseListener {
 		attackEnemy = new JButton("Attack!");
 		this.add(attackEnemy);
 		capture = new JButton("Capture");
-		if (unit.getType() == "INFANTRY") {
+		if (unit.getType().equals("INFANTRY")) {
 			this.add(capture);
 		}
 

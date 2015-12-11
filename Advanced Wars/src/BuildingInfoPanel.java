@@ -1,5 +1,4 @@
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -11,10 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import layout.TableLayout;
+
 /**
- * (Created with every building)
- * Lays out a set of information that describes the coupled building stats
- * Displayed on the (Team)InformationContainer
+ * (Created with every building) Lays out a set of information that describes
+ * the coupled building stats Displayed on the (Team)InformationContainer
  * 
  * @author ApolloFortyTwo
  *
@@ -36,7 +35,8 @@ public class BuildingInfoPanel extends JPanel implements ActionListener {
 
 	/**
 	 * 
-	 * @param building (The building whose information will be described) 
+	 * @param building
+	 *            (The building whose information will be described)
 	 */
 	public BuildingInfoPanel(Building building) {
 		this.building = building;
@@ -51,7 +51,18 @@ public class BuildingInfoPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (!building.isDead() && building.getCurrentlyProducing() != e.getActionCommand()) {
+		/**
+		 * stops the building from reset the same production for the same unit
+		 */
+		if(!building.isDead() && building.getCurrentlyProducing() == null){
+			System.out.println(e.getActionCommand() + " IN PRODUCTION");
+
+			building.setCurrentlyProducing(e.getActionCommand());
+
+			building.setEndTimeOfProduction(UnitInfo.getProductionTime(e.getActionCommand()));
+			this.updateInfo();
+			
+		}else if (!building.isDead() && building.getCurrentlyProducing() != null && !building.getCurrentlyProducing().equals(e.getActionCommand())){
 			System.out.println(e.getActionCommand() + " IN PRODUCTION");
 
 			building.setCurrentlyProducing(e.getActionCommand());
@@ -59,6 +70,7 @@ public class BuildingInfoPanel extends JPanel implements ActionListener {
 			building.setEndTimeOfProduction(UnitInfo.getProductionTime(e.getActionCommand()));
 			this.updateInfo();
 		}
+
 	}
 
 	public void buttons() {
@@ -107,7 +119,8 @@ public class BuildingInfoPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Called when something about the Buildings information is changed and is need to be re-displayed
+	 * Called when something about the Buildings information is changed and is
+	 * need to be re-displayed
 	 */
 	public void updateInfo() {
 		if (building.getCurrentlyProducing() == null) {

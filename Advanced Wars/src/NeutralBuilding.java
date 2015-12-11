@@ -1,5 +1,4 @@
 
-
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -10,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class NeutralBuilding extends JLabel implements MouseListener {
-	public static List<NeutralBuilding> buildingsArray = new ArrayList<NeutralBuilding>();
+	public static List<NeutralBuilding> nbuildingsArray = new ArrayList<NeutralBuilding>();
 
 	public BuildingInfoPanel buildingPanel;
 
@@ -20,8 +19,8 @@ public class NeutralBuilding extends JLabel implements MouseListener {
 	private Image neutralTeam;
 
 	public NeutralBuilding(int x, int y) {
-		buildingsArray.add(this);
-
+		nbuildingsArray.add(this);
+		
 		xPosition = x;
 		yPosition = y;
 
@@ -29,6 +28,10 @@ public class NeutralBuilding extends JLabel implements MouseListener {
 
 		this.setIcon(new ImageIcon(neutralTeam));
 		this.addMouseListener(this);
+		
+		if (Terrain.terrainArray[x][y] != null) {
+			Interface.tilePanel.remove(Terrain.terrainArray[x][y]);
+		}
 
 		Interface.tilePanel.add(this, Integer.toString(x) + "," + Integer.toString(y));
 		Interface.tilePanel.repaint();
@@ -47,10 +50,8 @@ public class NeutralBuilding extends JLabel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (Terrain.terrainArray[getXPosition()][getYPosition()].isCapturable()) {
-			Building.buildingsArray
-					.add((new CapturedBuilding(this.xPosition, this.yPosition, Unit.selectedUnit.getTeam())));
-
-			NeutralBuilding.buildingsArray.remove(this);
+			new CapturedBuilding(this.xPosition, this.yPosition, Unit.selectedUnit.getTeam());
+			NeutralBuilding.nbuildingsArray.remove(this);
 			Interface.tilePanel.remove(this);
 		}
 	}

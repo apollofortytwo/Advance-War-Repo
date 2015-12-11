@@ -8,9 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- * A stationary entity that is controlled by the Player has an assigned team that can
- * control it Added on to the Tile Panel Can produce new Units over a period of
- * time Can be destroyed by enemy Units
+ * A stationary entity that is controlled by the Player has an assigned team
+ * that can control it Added on to the Tile Panel Can produce new Units over a
+ * period of time Can be destroyed by enemy Units
  * 
  * @author ApolloFortyTwo
  *
@@ -64,14 +64,19 @@ public class Building extends JLabel implements MouseListener {
 
 	/**
 	 * 
-	 * @param x			(Location on the x axis of the TilePanel)
-	 * @param y			(Location on the y axis of the TilePanel)
-	 * @param team		(Which team is able to use this Building)
+	 * @param x
+	 *            (Location on the x axis of the TilePanel)
+	 * @param y
+	 *            (Location on the y axis of the TilePanel)
+	 * @param team
+	 *            (Which team is able to use this Building)
 	 */
 	public Building(int x, int y, String team) {
 		this.team = team;
 		this.health = 50;
 
+		Building.buildingsArray.add(this);
+		
 		buildingPanel = new BuildingInfoPanel(this);
 		setxPosition(x);
 		setyPosition(y);
@@ -87,11 +92,15 @@ public class Building extends JLabel implements MouseListener {
 
 		this.addMouseListener(this);
 
+		if (Terrain.terrainArray[x][y] != null) {
+			Interface.tilePanel.remove(Terrain.terrainArray[x][y]);
+		}
+		
 		Interface.tilePanel.add(this, Integer.toString(x) + "," + Integer.toString(y));
 		Interface.tilePanel.repaint();
 		Interface.tilePanel.revalidate();
 		buildingPanel.updateInfo();
-		return;
+		
 	}
 
 	private void dead() {
@@ -133,13 +142,12 @@ public class Building extends JLabel implements MouseListener {
 		return this.isDead;
 	}
 
-	
 	private void isProductionFinished() {
 		if (isDead) {
 			endTimeOfProduction = 100000;
 		}
-		if (this.endTimeOfProduction == TurnPanelLabel.turnsElapsed && this.currentlyProducing != null) {
-			Unit.UnitsArray.add(new Unit(this.getxPosition(), this.getyPosition(), this.currentlyProducing, this.team));
+		if (this.endTimeOfProduction == TurnPanel.turnsElapsed && this.currentlyProducing != null) {
+			new Unit(this.getxPosition(), this.getyPosition(), this.currentlyProducing, this.team);
 			System.out.println("Exported");
 			this.currentlyProducing = null;
 		} else if (this.currentlyProducing != null) {
@@ -149,14 +157,16 @@ public class Building extends JLabel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		// Determine if the location that it is standing on has been marked as attackable
+
+		// Determine if the location that it is standing on has been marked as
+		// attackable
 		if (Terrain.terrainArray[getxPosition()][getyPosition()].getIsAttackable()) {
 
-			//Make sure that the attacker isn't on the same team as the building
-			if (Unit.selectedUnit != null && Unit.selectedUnit.getTeam() != this.team) {
+			// Make sure that the attacker isn't on the same team as the
+			// building
+			if (Unit.selectedUnit != null && !Unit.selectedUnit.getTeam().equals(this.team)) {
 				System.out.println("Building at: " + getxPosition() + ", " + getyPosition() + " is being attacked");
-				
+
 				this.health = this.health - Unit.selectedUnit.info.attack;
 				this.buildingPanel.updateInfo();
 				healthLabel.updateHealth(this.health);
@@ -175,7 +185,7 @@ public class Building extends JLabel implements MouseListener {
 			}
 		}
 
-		if (this.team == TurnPanelLabel.turnText) {
+		if (this.team.equals(TurnPanel.turnText)) {
 			Terrain.restoreAllTileStatus();
 			Building.setSelectedBuilding(this);
 			Interface.addBuildingInfo(this);
@@ -190,7 +200,7 @@ public class Building extends JLabel implements MouseListener {
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (Building.selectedBuilding != null) {
-			if (Building.selectedBuilding.getTeam() != this.team) {
+			if (!Building.selectedBuilding.getTeam().equals(this.team)) {
 				Interface.addBuildingInfo(this);
 
 			}
@@ -204,7 +214,7 @@ public class Building extends JLabel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (Building.selectedBuilding != null) {
-			if (Building.selectedBuilding.getTeam() != this.team) {
+			if (!Building.selectedBuilding.getTeam().equals(this.team)) {
 				Interface.remove(team);
 			}
 		} else if (Building.selectedBuilding == null) {
@@ -234,8 +244,13 @@ public class Building extends JLabel implements MouseListener {
 	}
 
 	public void setEndTimeOfProduction(int timeOfProduction) {
-		this.endTimeOfProduction = TurnPanelLabel.turnsElapsed + timeOfProduction + 1;
+		this.endTimeOfProduction = TurnPanel.turnsElapsed + timeOfProduction + 1;
 		System.out.println("Setting endTimeOfProduction to: " + this.endTimeOfProduction);
+	}
+	
+	public void setEndTimeofProduction(int endTimeOfProduction){
+		this.endTimeOfProduction = endTimeOfProduction;
+		
 	}
 
 	public void setHealth(int health) {
@@ -243,7 +258,7 @@ public class Building extends JLabel implements MouseListener {
 	}
 
 	public void setTimeOfProduction() {
-		this.timeOfProduction = TurnPanelLabel.turnsElapsed;
+		this.timeOfProduction = TurnPanel.turnsElapsed;
 	}
 
 	public void setxPosition(int xPosition) {

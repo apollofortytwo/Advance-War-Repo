@@ -10,14 +10,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
+/**
+ * Start Screen:
+ * 		Gives the user the ability to start a new game or load a game
+ * 
+ * Map selection Screen:
+ * 		picks the map the user will play
+ * @author Bryan
+ *
+ */
 public class StartScreen extends JFrame implements ActionListener {
 
 	public StartScreen() {
-
 		this.setSize(1080, 720);
 		this.setLayout(null);
-		
+
 		title();
 		options();
 		this.setVisible(true);
@@ -25,9 +32,9 @@ public class StartScreen extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getActionCommand() == "NEW") {
+		if (arg0.getActionCommand().equals("NEW")) {
 			mapSelectionScreen();
-			
+
 		} else {
 			try {
 				new LoadGame();
@@ -40,10 +47,10 @@ public class StartScreen extends JFrame implements ActionListener {
 
 	}
 
-	private void mapSelectionScreen(){
+	private void mapSelectionScreen() {
 		this.getContentPane().removeAll();
 		this.getContentPane().repaint();
-		
+
 		this.setLayout(new GridLayout(2, 0));
 
 		JButton mobaMap = new JButton("MOBA");
@@ -77,12 +84,11 @@ public class StartScreen extends JFrame implements ActionListener {
 
 		this.add(mobaMap);
 		this.add(large);
-		
+
 		this.revalidate();
 		this.getContentPane().repaint();
 	}
-	
-	
+
 	private void options() {
 		JPanel optionsPanel = new JPanel();
 		GridLayout g = new GridLayout(2, 0);

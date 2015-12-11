@@ -1,5 +1,4 @@
 
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
@@ -10,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import layout.TableLayout;
+
 
 class Unit extends JLabel implements MouseListener, Serializable {
 
@@ -23,7 +23,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	public static void resetUnits() {
 		for (Unit x : Unit.UnitsArray) {
 			x.setIcon(new ImageIcon(x.getSprites().idle));
-			if (x.getTeam() != TurnPanelLabel.turnText) {
+			if (!x.getTeam().equals(TurnPanel.turnText)) {
 				x.setMoved(true);
 				x.setAttacked(true);
 			} else {
@@ -44,7 +44,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	}
 
-	public UnitInfoPanel unitPanel;
+	public UnitInfoPanel infoPanel;
 	private int xPosition, yPosition;
 
 	private boolean moved = false, attacked = false;
@@ -56,6 +56,34 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	private HealthLabel healthLabel;
 
+	/**
+	 * JPanel that can be added to a Unit Panel cell
+	 * a Unit can be provided to both players
+	 * a Unit can attack the other players Units
+	 * a Unit can change it's location on the UnitPanel(Move) through it's move function
+	 * 
+	 * Types of Units
+	 * 		- Infantry
+	 * 			quick to produce through buildings
+	 * 			expendable 
+	 * 		- Artillery
+	 * 			slow
+	 * 			high damage
+	 * 			high range
+	 * 			slow to produce
+	 * 		- Tank
+	 * 			lots of health
+	 * 			high damage
+	 * 		- Helicopter 
+	 * 			High movement
+	 * 			Can move over trees
+	 * 			Doesn't get affected by mud/water
+	 *
+	 *@param xPosition		(X Position on the Unit Panel		)
+	 *@param xPosition		(Y Position on the Unit Panel		)
+	 *@param unit 			(Type of Unit						)
+	 *@team  team			(Can be controlled by this player	) 
+	 */
 	public Unit(int xPosition, int yPosition, String unit, String team) {
 		UnitsArray.add(this);
 		this.setCordinates(xPosition, yPosition);
@@ -67,8 +95,8 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 		info = new UnitInfo(unit);
 
-		unitPanel = new UnitInfoPanel(this);
-		unitPanel.updateToPanel();
+		infoPanel = new UnitInfoPanel(this);
+		infoPanel.updateToPanel();
 
 		this.setIcon(new ImageIcon(sprites.idle));
 
@@ -80,6 +108,11 @@ class Unit extends JLabel implements MouseListener, Serializable {
 		Interface.unitPanel.add(this, Integer.toString(xPosition) + "," + Integer.toString(yPosition));
 	}
 
+	/**
+	 * Ones an Enemy Unit is found on a tile that has the ability to attack
+	 * The selected Unit will damage the enemy Unit
+	 * If the enemy Unit's health depletes they are removed from the game 
+	 */
 	private void attackUnit() {
 		for (int x = 0; x < Terrain.terrainArray.length; x++) {
 			for (int y = 0; y < Terrain.terrainArray.length; y++) {
@@ -109,6 +142,9 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	}
 
+	/**
+	 * Removes the Unit from the game
+	 */
 	private void dead() {
 		Interface.unitPanel.remove(this);
 		Interface.unitPanel.revalidate();
@@ -152,7 +188,6 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	public void gray() {
 		this.setIcon(new ImageIcon(this.getSprites().grayyed));
-
 	}
 
 	public boolean isAttacked() {
@@ -165,12 +200,15 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if (Unit.selectedUnit != null && Unit.selectedUnit.team != this.team && !Unit.selectedUnit.attacked) {
+		if (Unit.selectedUnit != null && 
+			!Unit.selectedUnit.team.equals(this.team) && 
+			!Unit.selectedUnit.attacked) {
 			this.attackUnit();
 		}
 
-		if (this.team.equals(TurnPanelLabel.turnLabel)) {
+		if (this.team.equals(TurnPanel.turnText)) {
 			Interface.restore();
+			System.out.println("New Unit selected");
 			Interface.addUnitInfo(this);
 			Unit.setSelectedUnit(this);
 			Terrain.restoreAllTileStatus();
@@ -185,7 +223,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		if (Unit.selectedUnit != null) {
-			if (Unit.selectedUnit.getTeam() != this.team) {
+			if (!Unit.selectedUnit.getTeam().equals(this.team)) {
 				Interface.addUnitInfo(this);
 				PathFinders.Hover(this);
 			}
@@ -200,7 +238,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		if (Unit.selectedUnit != null) {
-			if (Unit.selectedUnit.getTeam() != this.team) {
+			if (!Unit.selectedUnit.getTeam().equals(this.team)) {
 				Terrain.restoreAllTileStatus();
 				PathFinders.selectedUnit();
 				Interface.remove(team);
@@ -222,6 +260,14 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	}
 
+	/**
+	 * If a certain Terrain is selected and has the 
+	 * ability to allow a Unit to move on it's location
+	 * the Unit is transfered to that location.
+	 * 
+	 * @param x		(x Position of the move-able Terrain)
+	 * @param y		(y Position of the move-able Terrain)
+	 */
 	public void moveUnit(int x, int y) {
 		Terrain.restoreAllTileStatus();
 		Interface.unitPanel.removeAll();
@@ -240,7 +286,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 		this.attacked = attacked;
 	}
 
-	public void setCordinates(int x, int y) {
+	private void setCordinates(int x, int y) {
 		setxPosition(x);
 		setyPosition(y);
 	}

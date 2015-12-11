@@ -1,18 +1,40 @@
 import java.io.Serializable;
 import java.util.List;
 
-import layout.SaveObject;
 
 public class Save implements Serializable {
-	List<SaveObject> list;
+	List<SaveObject> units;
+	List<SaveObject> nBuildings;
+	List<SaveObject> buildings;
+	
 	String map;
-	public double[][] size;
+	String turnText;
+	int turnsElapsed;
+	double[][] size;
 
-	public void setList(List<SaveObject> list) {
-		this.list = list;
+
+	public void setUnits(List<SaveObject> units) {
+		this.units = units;
 	}
 
-	public List<SaveObject> getList() {
-		return list;
+	public List<SaveObject> getUnits() {
+		return units;
 	}
+	
+	public void setBuildings(List<SaveObject> Buildings) {
+		this.buildings = Buildings;
+	}
+
+	public List<SaveObject> getBuildings() {
+		return buildings;
+	}
+
+	public void setNBuildings(List<SaveObject> NBuildings) {
+		this.nBuildings = NBuildings;
+	}
+
+	public List<SaveObject> getNBuildings() {
+		return nBuildings;
+	}
+	
 }

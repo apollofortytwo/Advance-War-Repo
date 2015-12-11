@@ -16,7 +16,12 @@ public class TeamStatPanel extends JPanel {
 	public InfoLabel helicopter = new InfoLabel("Number of Helicopter: ");
 	public JButton endTurn = new JButton("End Turn");
 	public String team;
-
+	
+	/**
+	 * shows the Team statistics 
+	 * 
+	 * @param team (Which team does the Panel represent)
+	 */
 	public TeamStatPanel(String team) {
 
 		this.setTeam(team);
@@ -36,7 +41,7 @@ public class TeamStatPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				TurnPanelLabel.endTurn();
+				TurnPanel.endTurn();
 				Unit.resetUnits();
 				Building.loopThroughProduction();
 				Building.regeneration();
@@ -64,6 +69,10 @@ public class TeamStatPanel extends JPanel {
 		this.team = team;
 	}
 
+	/**
+	 * recounts the amount of Units on the screen for a team
+	 * 
+	 */
 	public void updateUnitInfo() {
 		int tank = 0;
 		int artillery = 0;
@@ -71,15 +80,15 @@ public class TeamStatPanel extends JPanel {
 		int helicopter = 0;
 
 		for (Unit x : Unit.UnitsArray) {
-			if (x.getTeam() == team) {
-				if (x.getType() == "TANK") {
+			if (x.getTeam().equals(team)) {
+				if (x.getType().equals("TANK")) {
 					tank++;
 					System.out.println(x.getTeam() + "," + x.getType() + "," + tank);
-				} else if (x.getType() == "ARTILLERY") {
+				} else if (x.getType().equals("ARTILLERY")) {
 					artillery++;
-				} else if (x.getType() == "INFANTRY") {
+				} else if (x.getType().equals("INFANTRY")) {
 					infantry++;
-				} else if (x.getType() == "HELICOPTER") {
+				} else if (x.getType().equals("HELICOPTER")) {
 					helicopter++;
 				}
 			} else {

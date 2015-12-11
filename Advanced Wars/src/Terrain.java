@@ -9,6 +9,12 @@ import javax.swing.JLabel;
 public class Terrain extends JLabel implements MouseListener {
 
 	public static Terrain[][] terrainArray;
+
+	/**
+	 * Fills all cells on tilePanel with a certain type of Terrain
+	 * 
+	 * @param type (the type of terrain used to fill the screen)
+	 */
 	public static void fillScreenWithTerrain(String type) {
 		for (int x = 0; x < Application.WIDTH; x++) {
 			for (int y = 0; y < Application.HEIGHT; y++) {
@@ -17,6 +23,10 @@ public class Terrain extends JLabel implements MouseListener {
 			}
 		}
 	}
+
+	/**
+	 * resets the actions on all tiles 
+	 */
 	public static void restoreAllTileStatus() {
 		for (int x = 0; x < Application.WIDTH; x++) {
 			for (int y = 0; y < Application.HEIGHT; y++) {
@@ -26,6 +36,7 @@ public class Terrain extends JLabel implements MouseListener {
 		Interface.tilePanel.revalidate();
 		Interface.tilePanel.repaint();
 	}
+
 	private String type;
 	private Image sprite, sprite_Blue, sprite_Red;
 	private int xPosition, yPosition;
@@ -37,8 +48,25 @@ public class Terrain extends JLabel implements MouseListener {
 
 	public boolean isCapturable = false;
 
-	public Terrain(int x, int y, String z) {
-		type = z;
+	/**
+	 * JLabel that is added to the cell of tilePanel
+	 * Terrain has an image and a set of qualities for the Terrain
+	 * Terrain can change it's color to indicate it's action
+	 * 		- Red 		(Unit can attack another Unit on this terrain location)
+	 * 		- Blue		(Unit can move onto this location)
+	 * 
+	 * types of Terrains 
+	 * 		- Grass
+	 * 		- Concrete
+	 * 		- Mud/Water 	(Reduces the Movement of Units by 2)
+	 * 		- Tree			(Units can move over this terrain. Unless flying)
+	 * 
+	 * @param x 	(X Position on the tile Panel)
+	 * @param y		(Y Position on the tile Panel)
+	 * @param type 	(Type of Terrain being Created)
+	 */
+	public Terrain(int x, int y, String type) {
+		this.type = type;
 		this.setPreferredSize(new Dimension(32, 32));
 		if (type == "GRASS") {
 			sprite = new ImageIcon(getClass().getResource("Grass.png")).getImage();
@@ -89,6 +117,9 @@ public class Terrain extends JLabel implements MouseListener {
 		return yPosition;
 	}
 
+	/**
+	 * Allow for unit to move on this Terrains location
+	 */
 	public void highlight() {
 		this.setIcon(new ImageIcon(sprite_Blue));
 		isMoveable = true;
@@ -96,14 +127,19 @@ public class Terrain extends JLabel implements MouseListener {
 		Interface.unitPanel.repaint();
 	}
 
+	/**
+	 * Capture			(Can convert a neutral Building on Terrains location)
+	 * Attack			(Can attack enemy Unit on this Terrains location    )			
+	 * @param action 	(CAPTURE OR ATTACK                                  )
+	 */
 	public void highlight(String action) {
 
 		if (!this.isMoveable) {
 			this.setIcon(new ImageIcon(sprite_Red));
 		}
-		if (action == "CAPTURE") {
+		if (action.equals("CAPTURE")) {
 			setCapturable(true);
-		} else if (action == "ATTACK") {
+		} else if (action.equals("ATTACK")) {
 			isAttackable = true;
 		} else {
 
@@ -157,6 +193,9 @@ public class Terrain extends JLabel implements MouseListener {
 
 	}
 
+	/**
+	 * take the ability to do actions with Units off this terrain
+	 */
 	private void restore() {
 		if (this.getIcon() != sprite) {
 			this.setIcon(new ImageIcon(sprite));

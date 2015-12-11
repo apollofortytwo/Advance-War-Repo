@@ -13,10 +13,12 @@ public class Explosion extends JLabel {
 	private static ActionListener explode;
 	private static int count;
 	private static Timer timer;
-	
+
 	/**
 	 * Adds and explosion sprite on the location of a Building.
-	 * @param unit (The unit that is being attacked)
+	 * 
+	 * @param unit
+	 *            (The unit that is being attacked)
 	 */
 	public static void explode(Building building) {
 		Interface.attackingSpritePanel.add(explosion,
@@ -28,7 +30,9 @@ public class Explosion extends JLabel {
 
 	/**
 	 * Adds and explosion sprite on the location of a Unit.
-	 * @param unit (The unit that is being attacked)
+	 * 
+	 * @param unit
+	 *            (The unit that is being attacked)
 	 */
 	public static void explode(Unit unit) {
 		Interface.attackingSpritePanel.add(explosion,
