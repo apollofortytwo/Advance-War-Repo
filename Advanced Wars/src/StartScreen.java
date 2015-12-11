@@ -4,8 +4,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,15 +36,18 @@ public class StartScreen extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("NEW")) {
 			mapSelectionScreen();
-
 		} else {
+			JFileChooser fc = new JFileChooser();
+			fc.showOpenDialog(this);
+			LoadGame.file = fc.getSelectedFile();
+			
 			try {
 				new LoadGame();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 		}
 
 	}

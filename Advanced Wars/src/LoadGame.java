@@ -1,11 +1,14 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
 
 public class LoadGame {
-
+	public static File file;
+	
 	LoadGame() throws Exception {
-		ObjectInputStream os = new ObjectInputStream(new FileInputStream("Game Save.txt"));
+		
+		ObjectInputStream os = new ObjectInputStream(new FileInputStream(file));
 
 		Save save = (Save) os.readObject();
 

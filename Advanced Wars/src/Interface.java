@@ -3,8 +3,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -88,11 +90,21 @@ public class Interface {
 		mainFrame = new JFrame("Advanced wars");
 		mainFrame.setSize(1080, 720);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		mainFrame.addWindowListener(new WindowAdapter() {
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
-					new SaveGame();
+					
+					int save = JOptionPane.showConfirmDialog(mainFrame, "Would you like to save", "SAVE", JOptionPane.YES_NO_CANCEL_OPTION);
+					if(save == 0){
+						JFileChooser fc = new JFileChooser();
+						fc.showSaveDialog(mainFrame);
+						SaveGame.fileName = fc.getSelectedFile();
+						new SaveGame();
+					}
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -103,6 +115,7 @@ public class Interface {
 		mainFrame.setVisible(true);
 
 	}
+	
 
 	public static void initalize() {
 		blueTeamInfo = new TeamStatPanel("Blue");
