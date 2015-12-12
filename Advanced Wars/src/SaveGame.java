@@ -33,7 +33,7 @@ public class SaveGame extends JFrame{
 		save.setNBuildings(SaveObject.buildings);
 		
 		try {
-			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName+".save"));
 			os.writeObject(save);
 			os.close();
 		} catch (Exception e) {

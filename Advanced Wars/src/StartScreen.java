@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * Start Screen:
  * 		Gives the user the ability to start a new game or load a game
@@ -26,28 +27,35 @@ public class StartScreen extends JFrame implements ActionListener {
 	public StartScreen() {
 		this.setSize(1080, 720);
 		this.setLayout(null);
-
-		title();
-		options();
+		setup();
 		this.setVisible(true);
 	}
-
+	
+	public void setup(){
+		title();
+		options();
+		
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("NEW")) {
 			mapSelectionScreen();
 		} else {
 			JFileChooser fc = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("ADVANCED WARS SAVE FILE", "save", "save");
+			fc.setFileFilter(filter);
 			fc.showOpenDialog(this);
-			LoadGame.file = fc.getSelectedFile();
-			
-			try {
-				new LoadGame();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(fc.getSelectedFile() != null){
+				LoadGame.file = fc.getSelectedFile();
+				try {
+					new LoadGame();
+				} catch (Exception e) {
+				}
+			}else{
+				return;
 			}
-			
+
 		}
 
 	}

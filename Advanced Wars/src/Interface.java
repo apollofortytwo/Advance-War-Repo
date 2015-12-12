@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 /**
  * acts as a display port for the classes Holds the mainFrame (Frame that holds
@@ -89,7 +90,7 @@ public class Interface {
 	public static void frame() {
 		mainFrame = new JFrame("Advanced wars");
 		mainFrame.setSize(1080, 720);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		
 		mainFrame.addWindowListener(new WindowAdapter() {
 
@@ -98,11 +99,19 @@ public class Interface {
 				try {
 					
 					int save = JOptionPane.showConfirmDialog(mainFrame, "Would you like to save", "SAVE", JOptionPane.YES_NO_CANCEL_OPTION);
-					if(save == 0){
+					if(save == JOptionPane.YES_OPTION){
+						mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						JFileChooser fc = new JFileChooser();
 						fc.showSaveDialog(mainFrame);
 						SaveGame.fileName = fc.getSelectedFile();
 						new SaveGame();
+						mainFrame.dispose();
+					}else if(save == JOptionPane.NO_OPTION){
+						mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						mainFrame.dispose();
+					}else if(save == JOptionPane.CANCEL_OPTION){
+						
+						
 					}
 					
 				} catch (IOException e1) {
@@ -114,6 +123,9 @@ public class Interface {
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.setVisible(true);
 
+	}
+	public static void close(){
+		
 	}
 	
 
