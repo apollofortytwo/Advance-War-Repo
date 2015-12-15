@@ -65,8 +65,8 @@ public class Interface {
 			if (Building.selectedBuilding == null) {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
-			} else if (Building.selectedBuilding != null
-					&& !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
+			} else
+				if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
 			}
@@ -74,8 +74,8 @@ public class Interface {
 			if (Building.selectedBuilding == null) {
 				redTeamInfoContainer.removeAll();
 				redTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
-			} else if (Building.selectedBuilding != null
-					&& !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
+			} else
+				if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				redTeamInfoContainer.removeAll();
 				redTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
 			}
@@ -91,29 +91,29 @@ public class Interface {
 		mainFrame = new JFrame("Advanced wars");
 		mainFrame.setSize(1080, 720);
 		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		
+
 		mainFrame.addWindowListener(new WindowAdapter() {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
-					
-					int save = JOptionPane.showConfirmDialog(mainFrame, "Would you like to save", "SAVE", JOptionPane.YES_NO_CANCEL_OPTION);
-					if(save == JOptionPane.YES_OPTION){
+
+					int save = JOptionPane.showConfirmDialog(mainFrame, "Would you like to save", "SAVE",
+							JOptionPane.YES_NO_CANCEL_OPTION);
+					if (save == JOptionPane.YES_OPTION) {
 						mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						JFileChooser fc = new JFileChooser();
 						fc.showSaveDialog(mainFrame);
 						SaveGame.fileName = fc.getSelectedFile();
 						new SaveGame();
 						mainFrame.dispose();
-					}else if(save == JOptionPane.NO_OPTION){
+					} else if (save == JOptionPane.NO_OPTION) {
 						mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						mainFrame.dispose();
-					}else if(save == JOptionPane.CANCEL_OPTION){
-						
-						
+					} else if (save == JOptionPane.CANCEL_OPTION) {
+
 					}
-					
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -124,10 +124,10 @@ public class Interface {
 		mainFrame.setVisible(true);
 
 	}
-	public static void close(){
-		
+
+	public static void close() {
+
 	}
-	
 
 	public static void initalize() {
 		blueTeamInfo = new TeamStatPanel("Blue");

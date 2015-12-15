@@ -27,7 +27,7 @@ public class MapEntityLoader {
 		new Unit(2, 15, "HELICOPTER", "Blue");
 		new Unit(4, 17, "HELICOPTER", "Blue");
 		new Unit(1, 18, "ARTILLERY", "Blue");
-		
+
 		int[] xRedBuilding = { 17, 19, 19 };
 		int[] yRedBuilding = { 0, 0, 2 };
 
@@ -52,18 +52,18 @@ public class MapEntityLoader {
 			new NeutralBuilding(xNeutralBuilding[i], yNeutralBuilding[i]);
 		}
 	}
-	public static void mobaNeutralBuilding(){
+
+	public static void mobaNeutralBuilding() {
 		int[] xNeutralBuilding = { 2, 7, 12, 17 };
 		int[] yNeutralBuilding = { 2, 5, 14, 17 };
 
-		
 		for (int i = 0; i != xNeutralBuilding.length; i++) {
-			for(Building x : Building.buildingsArray){
-				if(x.getxPosition() != xNeutralBuilding[i]&& x.getyPosition() != yNeutralBuilding[i]){
+			for (Building x : Building.buildingsArray) {
+				if (x.getxPosition() != xNeutralBuilding[i] && x.getyPosition() != yNeutralBuilding[i]) {
 					new NeutralBuilding(xNeutralBuilding[i], yNeutralBuilding[i]);
 				}
 			}
-			
+
 		}
 	}
 }

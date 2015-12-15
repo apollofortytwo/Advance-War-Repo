@@ -32,7 +32,7 @@ public class Application {
 
 	public static void game() {
 		System.out.println("Loading");
-	
+
 		start.dispose();
 
 		Interface.frame();
@@ -48,7 +48,7 @@ public class Application {
 
 		TurnPanel.endTurn();
 		TurnPanel.turnPanelStart();
-		
+
 		playMusic();
 
 	}

@@ -18,8 +18,10 @@ public class SaveObject implements Serializable {
 	public boolean captured;
 	public boolean attacked;
 	public boolean moved;
+
 	/**
-	 * @param Unit 	(Unit that will be saved)
+	 * @param Unit
+	 *            (Unit that will be saved)
 	 */
 	public SaveObject(Unit unit) {
 		units.add(this);
@@ -31,8 +33,8 @@ public class SaveObject implements Serializable {
 		this.attacked = unit.isAttacked();
 		this.moved = unit.isMoved();
 	}
-	
-	public SaveObject(Building building){
+
+	public SaveObject(Building building) {
 		buildings.add(this);
 		this.x = building.getxPosition();
 		this.y = building.getyPosition();

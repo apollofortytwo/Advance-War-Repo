@@ -24,8 +24,11 @@ public class UnitInfoPanel extends JPanel implements MouseListener {
 	private JButton capture;
 
 	/**
-	 * holds and displays an individual Units information on the Team Information Container 
-	 * @param unit	(Unit that's information will be held and displayed)
+	 * holds and displays an individual Units information on the Team
+	 * Information Container
+	 * 
+	 * @param unit
+	 *            (Unit that's information will be held and displayed)
 	 */
 	public UnitInfoPanel(Unit unit) {
 		this.unit = unit;

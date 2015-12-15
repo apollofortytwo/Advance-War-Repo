@@ -1,6 +1,5 @@
 /**
- * Acts like a Building Starts off with 1 hp
- * created by Neutral Buildings
+ * Acts like a Building Starts off with 1 hp created by Neutral Buildings
  * 
  * 
  * @author ApolloFortyTwo
@@ -10,9 +9,12 @@ public class CapturedBuilding extends Building {
 
 	/**
 	 * 
-	 * @param x		(x Position)
-	 * @param y		(y Position )
-	 * @param team	(used by which player)
+	 * @param x
+	 *            (x Position)
+	 * @param y
+	 *            (y Position )
+	 * @param team
+	 *            (used by which player)
 	 */
 	public CapturedBuilding(int x, int y, String team) {
 		super(x, y, team);

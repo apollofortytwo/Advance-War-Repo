@@ -54,15 +54,16 @@ public class BuildingInfoPanel extends JPanel implements ActionListener {
 		/**
 		 * stops the building from reset the same production for the same unit
 		 */
-		if(!building.isDead() && building.getCurrentlyProducing() == null){
+		if (!building.isDead() && building.getCurrentlyProducing() == null) {
 			System.out.println(e.getActionCommand() + " IN PRODUCTION");
 
 			building.setCurrentlyProducing(e.getActionCommand());
 
 			building.setEndTimeOfProduction(UnitInfo.getProductionTime(e.getActionCommand()));
 			this.updateInfo();
-			
-		}else if (!building.isDead() && building.getCurrentlyProducing() != null && !building.getCurrentlyProducing().equals(e.getActionCommand())){
+
+		} else if (!building.isDead() && building.getCurrentlyProducing() != null
+				&& !building.getCurrentlyProducing().equals(e.getActionCommand())) {
 			System.out.println(e.getActionCommand() + " IN PRODUCTION");
 
 			building.setCurrentlyProducing(e.getActionCommand());
@@ -92,11 +93,11 @@ public class BuildingInfoPanel extends JPanel implements ActionListener {
 		INFANTRY.addActionListener(this);
 		INFANTRY.setActionCommand("INFANTRY");
 
-		ARTILIARY = new JButton("ARTILARY: 15 turns");
+		ARTILIARY = new JButton("ARTILLERY: 15 turns");
 		ARTILIARY.addActionListener(this);
-		ARTILIARY.setActionCommand("ARTILARY");
+		ARTILIARY.setActionCommand("ARTILLERY");
 
-		HELICOPTER = new JButton("HELICOPTER: 8 turns");
+		HELICOPTER = new JButton("HELICOPTER: ");
 		HELICOPTER.addActionListener(this);
 		HELICOPTER.setActionCommand("HELICOPTER");
 

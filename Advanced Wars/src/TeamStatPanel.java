@@ -16,11 +16,12 @@ public class TeamStatPanel extends JPanel {
 	public InfoLabel helicopter = new InfoLabel("Number of Helicopter: ");
 	public JButton endTurn = new JButton("End Turn");
 	public String team;
-	
+
 	/**
-	 * shows the Team statistics 
+	 * shows the Team statistics
 	 * 
-	 * @param team (Which team does the Panel represent)
+	 * @param team
+	 *            (Which team does the Panel represent)
 	 */
 	public TeamStatPanel(String team) {
 

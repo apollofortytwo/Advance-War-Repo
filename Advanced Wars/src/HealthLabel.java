@@ -22,12 +22,13 @@ public class HealthLabel extends JLabel {
 
 	}
 
-	public void reset(int health){
+	public void reset(int health) {
 		green = (int) (health / 1.2);
 		yellow = (int) (health / 1.5);
 		red = health / 3;
 		this.updateHealth(health);
 	}
+
 	public int getGreen() {
 		return green;
 	}

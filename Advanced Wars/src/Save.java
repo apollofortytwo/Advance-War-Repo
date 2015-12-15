@@ -1,17 +1,15 @@
 import java.io.Serializable;
 import java.util.List;
 
-
 public class Save implements Serializable {
 	List<SaveObject> units;
 	List<SaveObject> nBuildings;
 	List<SaveObject> buildings;
-	
+
 	String map;
 	String turnText;
 	int turnsElapsed;
 	double[][] size;
-
 
 	public void setUnits(List<SaveObject> units) {
 		this.units = units;
@@ -20,7 +18,7 @@ public class Save implements Serializable {
 	public List<SaveObject> getUnits() {
 		return units;
 	}
-	
+
 	public void setBuildings(List<SaveObject> Buildings) {
 		this.buildings = Buildings;
 	}
@@ -36,5 +34,5 @@ public class Save implements Serializable {
 	public List<SaveObject> getNBuildings() {
 		return nBuildings;
 	}
-	
+
 }

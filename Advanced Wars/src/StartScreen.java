@@ -4,21 +4,21 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
- * Start Screen:
- * 		Gives the user the ability to start a new game or load a game
+ * Start Screen: Gives the user the ability to start a new game or load a game
  * 
- * Map selection Screen:
- * 		picks the map the user will play
+ * Map selection Screen: picks the map the user will play
+ * 
  * @author Bryan
  *
  */
@@ -30,76 +30,60 @@ public class StartScreen extends JFrame implements ActionListener {
 		setup();
 		this.setVisible(true);
 	}
-	
-	public void setup(){
+
+	public void setup() {
 		title();
 		options();
 		
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("NEW")) {
-			mapSelectionScreen();
-		} else {
-			JFileChooser fc = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("ADVANCED WARS SAVE FILE", "save", "save");
-			fc.setFileFilter(filter);
-			fc.showOpenDialog(this);
-			if(fc.getSelectedFile() != null){
-				LoadGame.file = fc.getSelectedFile();
-				try {
-					new LoadGame();
-				} catch (Exception e) {
-				}
-			}else{
-				return;
-			}
-
+			mapSelect();
+		} else if(arg0.getActionCommand().equals("LOAD")){
+			loadFile();
 		}
 
 	}
-
-	private void mapSelectionScreen() {
-		this.getContentPane().removeAll();
-		this.getContentPane().repaint();
-
-		this.setLayout(new GridLayout(2, 0));
-
-		JButton mobaMap = new JButton("MOBA");
-		mobaMap.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				MapLoader.setMap("MOBA");
-				Application.game();
-				return;
+	private void loadFile(){
+		JFileChooser fc = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("ADVANCED WARS SAVE FILE", "save", "save");
+		fc.setFileFilter(filter);
+		fc.showOpenDialog(this);
+		if (fc.getSelectedFile() != null) {
+			LoadGame.file = fc.getSelectedFile();
+			try {
+				new LoadGame();
+			} catch (Exception e) {
 			}
-
-		});
-		JButton large = new JButton("Large");
-		large.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				MapLoader.setMap("Large");
-				Application.size = new double[][] {
-						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-								32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
-						{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
-				};
-				;
-				Application.setTable();
-				Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
-				Application.game();
-				return;
-			}
-
-		});
-
-		this.add(mobaMap);
-		this.add(large);
-
-		this.revalidate();
-		this.getContentPane().repaint();
+		} else {
+			return;
+		}
+	}
+	private void mapSelect(){
+		String[] options = new String[2];
+		options[0] = new String("MOBA");
+		options[1] = new String("Large");
+		int save = JOptionPane.showOptionDialog(this.getContentPane(),"Select a Map","MAP SELECTION", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+		if(save == 0){
+			MapLoader.setMap("MOBA");
+		}else if(save == 1){
+			MapLoader.setMap("Large");
+		}
+		selectGame();
+	}
+	private void selectGame(){
+		String[] options = new String[2];
+		options[0] = new String("Player vs. Player");
+		options[1] = new String("Player vs. AI");
+		int save = JOptionPane.showOptionDialog(this.getContentPane(),"","PLAYERS", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+		if(save == 0){
+			System.out.println("PVP");
+		}else if(save == 1){
+			System.out.println("PVAI");
+		}
+		Application.game();
 	}
 
 	private void options() {

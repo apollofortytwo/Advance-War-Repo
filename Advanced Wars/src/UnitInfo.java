@@ -22,7 +22,9 @@ public class UnitInfo implements Serializable {
 
 	/**
 	 * gives unit the information that is followed by it's type
-	 * @param unit	(the unit that gets it's information)
+	 * 
+	 * @param unit
+	 *            (the unit that gets it's information)
 	 */
 	public UnitInfo(String unit) {
 		this.health = UnitInfo.getUnitHealthInfo(unit);

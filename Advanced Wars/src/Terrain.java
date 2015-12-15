@@ -13,7 +13,8 @@ public class Terrain extends JLabel implements MouseListener {
 	/**
 	 * Fills all cells on tilePanel with a certain type of Terrain
 	 * 
-	 * @param type (the type of terrain used to fill the screen)
+	 * @param type
+	 *            (the type of terrain used to fill the screen)
 	 */
 	public static void fillScreenWithTerrain(String type) {
 		for (int x = 0; x < Application.WIDTH; x++) {
@@ -25,7 +26,7 @@ public class Terrain extends JLabel implements MouseListener {
 	}
 
 	/**
-	 * resets the actions on all tiles 
+	 * resets the actions on all tiles
 	 */
 	public static void restoreAllTileStatus() {
 		for (int x = 0; x < Application.WIDTH; x++) {
@@ -49,21 +50,20 @@ public class Terrain extends JLabel implements MouseListener {
 	public boolean isCapturable = false;
 
 	/**
-	 * JLabel that is added to the cell of tilePanel
-	 * Terrain has an image and a set of qualities for the Terrain
-	 * Terrain can change it's color to indicate it's action
-	 * 		- Red 		(Unit can attack another Unit on this terrain location)
-	 * 		- Blue		(Unit can move onto this location)
+	 * JLabel that is added to the cell of tilePanel Terrain has an image and a
+	 * set of qualities for the Terrain Terrain can change it's color to
+	 * indicate it's action - Red (Unit can attack another Unit on this terrain
+	 * location) - Blue (Unit can move onto this location)
 	 * 
-	 * types of Terrains 
-	 * 		- Grass
-	 * 		- Concrete
-	 * 		- Mud/Water 	(Reduces the Movement of Units by 2)
-	 * 		- Tree			(Units can move over this terrain. Unless flying)
+	 * types of Terrains - Grass - Concrete - Mud/Water (Reduces the Movement of
+	 * Units by 2) - Tree (Units can move over this terrain. Unless flying)
 	 * 
-	 * @param x 	(X Position on the tile Panel)
-	 * @param y		(Y Position on the tile Panel)
-	 * @param type 	(Type of Terrain being Created)
+	 * @param x
+	 *            (X Position on the tile Panel)
+	 * @param y
+	 *            (Y Position on the tile Panel)
+	 * @param type
+	 *            (Type of Terrain being Created)
 	 */
 	public Terrain(int x, int y, String type) {
 		this.type = type;
@@ -128,9 +128,11 @@ public class Terrain extends JLabel implements MouseListener {
 	}
 
 	/**
-	 * Capture			(Can convert a neutral Building on Terrains location)
-	 * Attack			(Can attack enemy Unit on this Terrains location    )			
-	 * @param action 	(CAPTURE OR ATTACK                                  )
+	 * Capture (Can convert a neutral Building on Terrains location) Attack (Can
+	 * attack enemy Unit on this Terrains location )
+	 * 
+	 * @param action
+	 *            (CAPTURE OR ATTACK )
 	 */
 	public void highlight(String action) {
 

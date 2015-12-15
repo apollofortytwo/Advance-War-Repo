@@ -10,10 +10,8 @@ import javax.swing.JLabel;
 
 import layout.TableLayout;
 
-
 class Unit extends JLabel implements MouseListener, Serializable {
 
-	private static final long serialVersionUID = 1L;
 	public static Unit selectedUnit = null;
 
 	public static boolean SelectedUnitActionPhase = false;
@@ -57,32 +55,22 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	private HealthLabel healthLabel;
 
 	/**
-	 * JPanel that can be added to a Unit Panel cell
-	 * a Unit can be provided to both players
-	 * a Unit can attack the other players Units
-	 * a Unit can change it's location on the UnitPanel(Move) through it's move function
+	 * JPanel that can be added to a Unit Panel cell a Unit can be provided to
+	 * both players a Unit can attack the other players Units a Unit can change
+	 * it's location on the UnitPanel(Move) through it's move function
 	 * 
-	 * Types of Units
-	 * 		- Infantry
-	 * 			quick to produce through buildings
-	 * 			expendable 
-	 * 		- Artillery
-	 * 			slow
-	 * 			high damage
-	 * 			high range
-	 * 			slow to produce
-	 * 		- Tank
-	 * 			lots of health
-	 * 			high damage
-	 * 		- Helicopter 
-	 * 			High movement
-	 * 			Can move over trees
-	 * 			Doesn't get affected by mud/water
+	 * Types of Units - Infantry quick to produce through buildings expendable -
+	 * Artillery slow high damage high range slow to produce - Tank lots of
+	 * health high damage - Helicopter High movement Can move over trees Doesn't
+	 * get affected by mud/water
 	 *
-	 *@param xPosition		(X Position on the Unit Panel		)
-	 *@param xPosition		(Y Position on the Unit Panel		)
-	 *@param unit 			(Type of Unit						)
-	 *@team  team			(Can be controlled by this player	) 
+	 * @param xPosition
+	 *            (X Position on the Unit Panel )
+	 * @param xPosition
+	 *            (Y Position on the Unit Panel )
+	 * @param unit
+	 *            (Type of Unit )
+	 * @team team (Can be controlled by this player )
 	 */
 	public Unit(int xPosition, int yPosition, String unit, String team) {
 		UnitsArray.add(this);
@@ -109,9 +97,9 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	}
 
 	/**
-	 * Ones an Enemy Unit is found on a tile that has the ability to attack
-	 * The selected Unit will damage the enemy Unit
-	 * If the enemy Unit's health depletes they are removed from the game 
+	 * Ones an Enemy Unit is found on a tile that has the ability to attack The
+	 * selected Unit will damage the enemy Unit If the enemy Unit's health
+	 * depletes they are removed from the game
 	 */
 	private void attackUnit() {
 		for (int x = 0; x < Terrain.terrainArray.length; x++) {
@@ -200,9 +188,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if (Unit.selectedUnit != null && 
-			!Unit.selectedUnit.team.equals(this.team) && 
-			!Unit.selectedUnit.attacked) {
+		if (Unit.selectedUnit != null && !Unit.selectedUnit.team.equals(this.team) && !Unit.selectedUnit.attacked) {
 			this.attackUnit();
 		}
 
@@ -261,12 +247,13 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	}
 
 	/**
-	 * If a certain Terrain is selected and has the 
-	 * ability to allow a Unit to move on it's location
-	 * the Unit is transfered to that location.
+	 * If a certain Terrain is selected and has the ability to allow a Unit to
+	 * move on it's location the Unit is transfered to that location.
 	 * 
-	 * @param x		(x Position of the move-able Terrain)
-	 * @param y		(y Position of the move-able Terrain)
+	 * @param x
+	 *            (x Position of the move-able Terrain)
+	 * @param y
+	 *            (y Position of the move-able Terrain)
 	 */
 	public void moveUnit(int x, int y) {
 		Terrain.restoreAllTileStatus();

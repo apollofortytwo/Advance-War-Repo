@@ -1,6 +1,6 @@
 
 public class PathFinders {
-	
+
 	/**
 	 * Display the selected Units movement action, or attack action range
 	 * 
@@ -23,7 +23,7 @@ public class PathFinders {
 					Unit.selectedUnit.info.range);
 		}
 	}
-	
+
 	public static void Hover(Unit unit) {
 
 		if (Unit.SelectedUnitActionPhase) {
@@ -41,15 +41,17 @@ public class PathFinders {
 			PathFinders.hoverAttack(unit.getxPosition(), unit.getyPosition(), unit.info.range);
 		}
 	}
-	
+
 	/**
 	 * 
-	 * 	shows and allow the terrains the change the
-	 *  properties to allow for neutral buildings to become buildings
-	 *  based on the location of the selectedUnit
+	 * shows and allow the terrains the change the properties to allow for
+	 * neutral buildings to become buildings based on the location of the
+	 * selectedUnit
 	 * 
-	 * @param x		(X position of the selected Unit)
-	 * @param y		(Y position of the selected Unit)
+	 * @param x
+	 *            (X position of the selected Unit)
+	 * @param y
+	 *            (Y position of the selected Unit)
 	 */
 	public static void capture(int x, int y) {
 		System.out.println("Capture");
@@ -79,7 +81,7 @@ public class PathFinders {
 	}
 
 	/**
-	 * Gives the possible range for attack for selectedUnits 
+	 * Gives the possible range for attack for selectedUnits
 	 * 
 	 */
 	public static void selectedUnitAttack() {
@@ -87,17 +89,19 @@ public class PathFinders {
 				Unit.selectedUnit.info.range);
 
 	}
-	
-/** -----------------------------------------------------------------------------------------------
- *
- *
- *
- *
- *
- *
- *
- *
- */
+
+	/**
+	 * -------------------------------------------------------------------------
+	 * ----------------------
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
 	private static void attack(int x, int y, int range) {
 		Unit.SelectedUnitActionPhase = true;
 		if (range > 0) {
@@ -131,8 +135,6 @@ public class PathFinders {
 		}
 
 	}
-
-
 
 	private static void fly(int x, int y, int movement) {
 		if (movement > 0) {
@@ -345,7 +347,5 @@ public class PathFinders {
 
 		}
 	}
-
-
 
 }

@@ -1,5 +1,6 @@
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+
 /*
  * Displays an information in a box
  * Information comes with a default starting text
@@ -17,7 +18,8 @@ public class InfoLabel extends JLabel {
 
 	/**
 	 * 
-	 * @param defaultText (The text that will be used as a default)
+	 * @param defaultText
+	 *            (The text that will be used as a default)
 	 */
 	public InfoLabel(String defaultText) {
 		this.defaultText = defaultText;

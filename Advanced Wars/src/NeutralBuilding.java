@@ -20,7 +20,7 @@ public class NeutralBuilding extends JLabel implements MouseListener {
 
 	public NeutralBuilding(int x, int y) {
 		nbuildingsArray.add(this);
-		
+
 		xPosition = x;
 		yPosition = y;
 
@@ -28,7 +28,7 @@ public class NeutralBuilding extends JLabel implements MouseListener {
 
 		this.setIcon(new ImageIcon(neutralTeam));
 		this.addMouseListener(this);
-		
+
 		if (Terrain.terrainArray[x][y] != null) {
 			Interface.tilePanel.remove(Terrain.terrainArray[x][y]);
 		}

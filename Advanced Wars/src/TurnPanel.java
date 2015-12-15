@@ -8,27 +8,25 @@ public class TurnPanel {
 	public static TurnPanelLabel turnLabel = new TurnPanelLabel();
 	public static TurnPanelLabel timeCounter = new TurnPanelLabel();
 	public static TurnPanelLabel turnsElapsedLabel = new TurnPanelLabel();
-	
+
 	public static String turnText = "Red";
 	public static int turnsElapsed = 0;
 	public static int countDownTimer = 100;
-	
+
 	/**
-	 * Displays the Information that the team can move
-	 * Increases the amount of turns elapsed and displays it
-	 * resets the count down timer 
+	 * Displays the Information that the team can move Increases the amount of
+	 * turns elapsed and displays it resets the count down timer
 	 */
 	private static void updateTurnLabel() {
 		turnLabel.setText(turnText.toUpperCase());
 		timeCounter.setText(Integer.toString(countDownTimer));
 		turnsElapsedLabel.setText("TURN: " + Integer.toString(turnsElapsed));
-		System.out.println("Current turn: "+turnText);
+		System.out.println("Current turn: " + turnText);
 	}
-	
+
 	/**
-	 * Sets the information for the first round
-	 * gives the proper color to the current Turn
-	 * and start's the time for the game
+	 * Sets the information for the first round gives the proper color to the
+	 * current Turn and start's the time for the game
 	 */
 	public static void turnPanelStart() {
 		turnLabel.setForeground(Color.white);
@@ -40,7 +38,7 @@ public class TurnPanel {
 			turnLabel.setBackground(Color.red);
 		}
 	}
-	
+
 	/**
 	 * Changes the turn so the other team can move
 	 */
@@ -58,10 +56,11 @@ public class TurnPanel {
 		Terrain.restoreAllTileStatus();
 		updateTurnLabel();
 	}
+
 	/**
-	 * starts the timer for the amount of time a player can do actions 
+	 * starts the timer for the amount of time a player can do actions
 	 */
-	
+
 	public static void turnTimer() {
 		ActionListener time = new ActionListener() {
 			@Override

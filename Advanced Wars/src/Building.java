@@ -76,7 +76,7 @@ public class Building extends JLabel implements MouseListener {
 		this.health = 50;
 
 		Building.buildingsArray.add(this);
-		
+
 		buildingPanel = new BuildingInfoPanel(this);
 		setxPosition(x);
 		setyPosition(y);
@@ -95,12 +95,12 @@ public class Building extends JLabel implements MouseListener {
 		if (Terrain.terrainArray[x][y] != null) {
 			Interface.tilePanel.remove(Terrain.terrainArray[x][y]);
 		}
-		
+
 		Interface.tilePanel.add(this, Integer.toString(x) + "," + Integer.toString(y));
 		Interface.tilePanel.repaint();
 		Interface.tilePanel.revalidate();
 		buildingPanel.updateInfo();
-		
+
 	}
 
 	private void dead() {
@@ -247,10 +247,10 @@ public class Building extends JLabel implements MouseListener {
 		this.endTimeOfProduction = TurnPanel.turnsElapsed + timeOfProduction + 1;
 		System.out.println("Setting endTimeOfProduction to: " + this.endTimeOfProduction);
 	}
-	
-	public void setEndTimeofProduction(int endTimeOfProduction){
+
+	public void setEndTimeofProduction(int endTimeOfProduction) {
 		this.endTimeOfProduction = endTimeOfProduction;
-		
+
 	}
 
 	public void setHealth(int health) {
