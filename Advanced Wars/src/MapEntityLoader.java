@@ -6,17 +6,32 @@ public class MapEntityLoader {
 			moba();
 		}
 	}
+	public static boolean ai = false;
+	
 
 	private void moba() {
-		new Unit(17, 1, "TANK", "Red");
-		new Unit(18, 2, "TANK", "Red");
-		new Unit(16, 1, "INFANTRY", "Red");
-		new Unit(18, 3, "INFANTRY", "Red");
-		new Unit(16, 3, "INFANTRY", "Red");
-		new Unit(17, 2, "INFANTRY", "Red");
-		new Unit(15, 2, "HELICOPTER", "Red");
-		new Unit(17, 4, "HELICOPTER", "Red");
-		new Unit(18, 1, "ARTILLERY", "Red");
+		if(ai){
+			new AIUnit(17, 1, "TANK", "Red");
+			new AIUnit(18, 2, "TANK", "Red");
+			new AIUnit(16, 1, "INFANTRY", "Red");
+			new AIUnit(18, 3, "INFANTRY", "Red");
+			new AIUnit(16, 3, "INFANTRY", "Red");
+			new AIUnit(17, 2, "INFANTRY", "Red");
+			new AIUnit(15, 2, "HELICOPTER", "Red");
+			new AIUnit(17, 4, "HELICOPTER", "Red");
+			new AIUnit(18, 1, "ARTILLERY", "Red");
+			
+		}else{
+			new Unit(17, 1, "TANK", "Red");
+			new Unit(18, 2, "TANK", "Red");
+			new Unit(16, 1, "INFANTRY", "Red");
+			new Unit(18, 3, "INFANTRY", "Red");
+			new Unit(16, 3, "INFANTRY", "Red");
+			new Unit(17, 2, "INFANTRY", "Red");
+			new Unit(15, 2, "HELICOPTER", "Red");
+			new Unit(17, 4, "HELICOPTER", "Red");
+			new Unit(18, 1, "ARTILLERY", "Red");
+		}
 
 		new Unit(1, 17, "TANK", "Blue");
 		new Unit(2, 18, "TANK", "Blue");

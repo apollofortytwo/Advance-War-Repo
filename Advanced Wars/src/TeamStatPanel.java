@@ -46,6 +46,7 @@ public class TeamStatPanel extends JPanel {
 				Unit.resetUnits();
 				Building.loopThroughProduction();
 				Building.regeneration();
+				AIUnit.moveAIs();
 
 			}
 		});

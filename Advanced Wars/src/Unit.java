@@ -273,7 +273,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 		this.attacked = attacked;
 	}
 
-	private void setCordinates(int x, int y) {
+	public void setCordinates(int x, int y) {
 		setxPosition(x);
 		setyPosition(y);
 	}

@@ -81,7 +81,9 @@ public class StartScreen extends JFrame implements ActionListener {
 		if(save == 0){
 			System.out.println("PVP");
 		}else if(save == 1){
-			System.out.println("PVAI");
+			System.out.println("Player vs AI");
+			MapEntityLoader.ai = true;
+			
 		}
 		Application.game();
 	}
