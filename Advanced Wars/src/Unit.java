@@ -260,9 +260,8 @@ class Unit extends JLabel implements MouseListener, Serializable {
 		Interface.unitPanel.removeAll();
 		Interface.unitPanel.setLayout(new TableLayout(Application.size));
 		Unit.selectedUnit.setCordinates(x, y);
-		for (int i = 0; i < Unit.UnitsArray.size(); i++) {
-			Interface.unitPanel.add(Unit.UnitsArray.get(i), Unit.UnitsArray.get(i).getxPosition(),
-					Unit.UnitsArray.get(i).getyPosition());
+		for(Unit z: Unit.UnitsArray){
+			Interface.unitPanel.add(z, z.getxPosition(), z.getyPosition());
 		}
 		Unit.selectedUnit.setMoved(true);
 		Interface.addUnitInfo(selectedUnit);

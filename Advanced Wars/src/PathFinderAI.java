@@ -6,11 +6,11 @@ public class PathFinderAI extends PathFinders {
 			try {
 				if (!Terrain.terrainArray[x + 1][y].isObstacle) {
 					if (Terrain.terrainArray[x + 1][y].isWater()) {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x + 1, y, distance - 2);
 
 					} else {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x + 1, y, distance - 1);
 
 					}
@@ -21,11 +21,11 @@ public class PathFinderAI extends PathFinders {
 			try {
 				if (!Terrain.terrainArray[x - 1][y].isObstacle) {
 					if (Terrain.terrainArray[x - 1][y].isWater()) {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x - 1, y, distance - 2);
 
 					} else {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x - 1, y, distance - 1);
 
 					}
@@ -36,11 +36,11 @@ public class PathFinderAI extends PathFinders {
 			try {
 				if (!Terrain.terrainArray[x][y - 1].isObstacle) {
 					if (Terrain.terrainArray[x][y - 1].isWater()) {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x, y - 1, distance - 2);
 
 					} else {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x, y - 1, distance - 1);
 
 					}
@@ -51,10 +51,10 @@ public class PathFinderAI extends PathFinders {
 			try {
 				if (!Terrain.terrainArray[x][y + 1].isObstacle) {
 					if (Terrain.terrainArray[x][y + 1].isWater()) {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x, y + 1, distance - 2);
 					} else {
-						unit.bestMove(x, y);
+						unit.potentialMove(x, y);
 						move(unit, x, y + 1, distance - 1);
 
 					}
@@ -62,7 +62,7 @@ public class PathFinderAI extends PathFinders {
 			} catch (Exception e) {
 			}
 		}else{
-			unit.bestMove(x, y);
+			unit.potentialMove(x, y);
 			return;
 		}
 	}

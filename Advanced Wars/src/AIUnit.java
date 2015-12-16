@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import layout.TableLayout;
@@ -6,78 +8,156 @@ import layout.TableLayout;
 public class AIUnit extends Unit {
 
 	public static List<AIUnit> aiUnits = new ArrayList<AIUnit>();
+
+	private List<Unit> potentialEnemy = new ArrayList<Unit>();
+
+	private int movetoX, movetoY;
 	private Unit bestEnemy;
 	private int turnsToReachEnemy;
-	private int movetoX, movetoY;
-	
+
 	public AIUnit(int xPosition, int yPosition, String unit, String team) {
 		super(xPosition, yPosition, unit, team);
 		aiUnits.add(this);
-		
+
 	}
-	
-	public static void moveAIs(){
+
+	public static void moveAIs() {
 		System.out.println("MOVE AI");
-		
-		for(AIUnit x: aiUnits){
+
+		for (AIUnit x : aiUnits) {
+			x.potentialEnemy();
 			x.closestEnemy();
 		}
-		
-		for(AIUnit x: aiUnits){
-			PathFinderAI.move(x, x.getxPosition(),x.getyPosition(), x.info.movement);
-		}
-		
-		for(AIUnit x: aiUnits){
+		for (AIUnit x : aiUnits) {
+			sortEnemy(x);
+			PathFinderAI.move(x, x.getxPosition(), x.getyPosition(), x.info.movement);
 			x.move();
 		}
+
 	}
-	
-	private void closestEnemy(){
-		setBestEnemy(null);
-		
-		turnsToReachEnemy = 100;
-		for(Unit x: Unit.UnitsArray){
-			int covered = 0;
-			
-			if(x.getEnemy().equals(this.getTeam())){
-				if(turnsToReachEnemy >= Math.abs(this.getxPosition() - x.getxPosition()) + Math.abs(this.getyPosition() - x.getyPosition())){
-					turnsToReachEnemy = Math.abs(this.getxPosition() - x.getxPosition()) + Math.abs(this.getyPosition() - x.getyPosition());
-					System.out.println(this.turnsToReachEnemy);
-					setBestEnemy(x);
-					System.out.println("Unit has targeted: "+this.bestEnemy.getxPosition() +","+ this.bestEnemy.getyPosition());
-				}else{
-					System.out.println("NOT BETTER");
+
+	private static void sortEnemy(AIUnit x) {
+		for (AIUnit z : AIUnit.aiUnits) {
+			int similarEnemy = 0;
+			if (z != x) {
+				for (AIUnit y : AIUnit.aiUnits) {
+					if (z != y) {
+						if (z.bestEnemy == y.bestEnemy) {
+							similarEnemy++;
+							if(similarEnemy > 3){
+								if (y.potentialEnemy.size() > 1) {
+									y.potentialEnemy.remove(y.bestEnemy);
+									y.closestEnemy();
+									System.out.println("new Target");
+									sortEnemy(y);
+									similarEnemy--;
+								}
+							}
+						}
+						
+					}
+				}
+				if (z.bestEnemy == x.bestEnemy) {
+					if (similarEnemy > 3) {
+						if (x.potentialEnemy.size() > 1) {
+							x.potentialEnemy.remove(x.bestEnemy);
+							x.closestEnemy();
+							System.out.println("new Target");
+							sortEnemy(x);
+						}
+						/*
+						 * if (z.turnsToReachEnemy >= x.turnsToReachEnemy) { if
+						 * (z.potentialEnemy.size() >= 2) {
+						 * z.potentialEnemy.remove(z.bestEnemy);
+						 * z.this.turnsToReachEnemyEnemy(); System.out.println(
+						 * "new Target"); sortEnemy(z); }
+						 * 
+						 * } else { if (x.potentialEnemy.size() >= 2) {
+						 * 
+						 * x.potentialEnemy.remove(x.bestEnemy);
+						 * x.this.turnsToReachEnemyEnemy(); System.out.println(
+						 * "new Target"); sortEnemy(x); } }
+						 */
+					}
 				}
 			}
 		}
+
 	}
-	
-	public void bestMove(int x, int y){
-		
-		if(turnsToReachEnemy >= Math.abs(x - this.bestEnemy.getxPosition()) + Math.abs(y - this.bestEnemy.getyPosition())){
-			turnsToReachEnemy = Math.abs(x - this.bestEnemy.getxPosition()) + Math.abs(y - this.bestEnemy.getyPosition());
-			System.out.println("Considering to move to: "+ x +","+y);
-			System.out.println(this.turnsToReachEnemy);
-			this.setMovetoX(x);
-			this.setMovetoY(y);
+
+	private void closestEnemy() {
+		this.bestEnemy = this.potentialEnemy.get(0);
+
+		this.turnsToReachEnemy = turnsToReachEnemy(this.getxPosition(), this.getyPosition(), bestEnemy.getxPosition(),
+				bestEnemy.getyPosition());
+
+		for (Unit z : this.potentialEnemy) {
+			int testing = turnsToReachEnemy(this.getxPosition(), this.getyPosition(), z.getxPosition(),
+					z.getyPosition());
+
+			if (testing < this.turnsToReachEnemy) {
+				this.turnsToReachEnemy = testing;
+				this.bestEnemy = z;
+			}
 		}
 	}
-	
-	private void move(){
+
+	private void potentialEnemy() {
+		this.potentialEnemy.clear();
+
+		for (Unit x : Unit.UnitsArray) {
+			if (x.getEnemy().equals(this.getTeam())) {
+				this.potentialEnemy.add(x);
+			}
+		}
+	}
+
+	public void potentialMove(int x, int y) {
+		for (Unit z : Unit.UnitsArray) {
+			if (z.getxPosition() == x && z.getyPosition() == y) {
+				return;
+			}
+		}
+		for (AIUnit z : AIUnit.aiUnits) {
+			if (z.movetoX == x && z.movetoY == y) {
+				return;
+			}
+		}
+		for (Building z : Building.buildingsArray) {
+			if (z.getxPosition() == x && z.getyPosition() == y) {
+				return;
+			}
+		}
+		for (NeutralBuilding z : NeutralBuilding.nbuildingsArray) {
+			if (z.getXPosition() == x && z.getYPosition() == y) {
+				return;
+			}
+		}
+
+		int testing = turnsToReachEnemy(x, y, this.bestEnemy.getxPosition(), this.bestEnemy.getyPosition());
+		if (testing < this.turnsToReachEnemy) {
+			this.turnsToReachEnemy = testing;
+			this.movetoX = x;
+			this.movetoY = y;
+		}
+	}
+
+	private int turnsToReachEnemy(int mx, int my, int ex, int ey) {
+		return Math.abs(mx - ex) + Math.abs(my - ey);
+	}
+
+	private void move() {
 		Interface.unitPanel.removeAll();
 		Interface.unitPanel.setLayout(new TableLayout(Application.size));
 		this.setCordinates(this.movetoX, this.movetoY);
-		
-		System.out.println("Unit is moving to: "+this.movetoX +", "+ this.movetoY);
-		
-		for (int i = 0; i < Unit.UnitsArray.size(); i++) {
-			Interface.unitPanel.add(Unit.UnitsArray.get(i), Unit.UnitsArray
-					.get(i).getxPosition(), Unit.UnitsArray.get(i)
-					.getyPosition());
+
+		for (Unit x : Unit.UnitsArray) {
+			Interface.unitPanel.add(x, x.getxPosition(), x.getyPosition());
 		}
+
 		this.setMoved(true);
 		Interface.addUnitInfo(this);
-		
+
 		Interface.unitPanel.revalidate();
 		Interface.unitPanel.repaint();
 	}

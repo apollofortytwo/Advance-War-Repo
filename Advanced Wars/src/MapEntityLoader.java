@@ -33,14 +33,17 @@ public class MapEntityLoader {
 			new Unit(18, 1, "ARTILLERY", "Red");
 		}
 
+		/*
 		new Unit(1, 17, "TANK", "Blue");
 		new Unit(2, 18, "TANK", "Blue");
 		new Unit(1, 16, "INFANTRY", "Blue");
 		new Unit(3, 18, "INFANTRY", "Blue");
 		new Unit(3, 16, "INFANTRY", "Blue");
 		new Unit(2, 17, "INFANTRY", "Blue");
+		*/
 		new Unit(2, 15, "HELICOPTER", "Blue");
 		new Unit(4, 17, "HELICOPTER", "Blue");
+		
 		new Unit(1, 18, "ARTILLERY", "Blue");
 
 		int[] xRedBuilding = { 17, 19, 19 };
