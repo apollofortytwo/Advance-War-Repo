@@ -10,7 +10,8 @@ public class AIUnit extends Unit {
 	public static List<AIUnit> aiUnits = new ArrayList<AIUnit>();
 
 	private List<Unit> potentialEnemy = new ArrayList<Unit>();
-
+	private List<AIPath> listOfPaths = new ArrayList<AIPath>();
+	
 	private int movetoX, movetoY;
 	private Unit bestEnemy;
 	private int turnsToReachEnemy;
@@ -29,7 +30,8 @@ public class AIUnit extends Unit {
 			x.closestEnemy();
 		}
 		for (AIUnit x : aiUnits) {
-			PathFinderAI.move(x, x.getxPosition(), x.getyPosition(), x.info.movement);
+			PathFinderAI.move(x, x.getxPosition(), x.getyPosition(),
+					((int) Application.HEIGHT * Application.WIDTH));
 			x.move();
 		}
 
@@ -38,29 +40,32 @@ public class AIUnit extends Unit {
 	private static void sortEnemy(AIUnit x) {
 		int similarEnemy = 0;
 		for (AIUnit z : AIUnit.aiUnits) {
-			if(z != x){
-				if(z.bestEnemy == x.bestEnemy){
+			if (z != x) {
+				if (z.bestEnemy == x.bestEnemy) {
 					similarEnemy++;
 				}
-				if(similarEnemy > 3){
-					x.potentialEnemy.remove(x.bestEnemy);
-					x.closestEnemy();
+				if (similarEnemy >= 3) {
+					if (x.potentialEnemy.size() > 2) {
+						x.potentialEnemy.remove(x.bestEnemy);
+						x.closestEnemy();
+					}
+
 				}
 			}
 
-			
 		}
 	}
 
 	private void closestEnemy() {
 		this.bestEnemy = this.potentialEnemy.get(0);
 
-		this.turnsToReachEnemy = turnsToReachEnemy(this.getxPosition(), this.getyPosition(), bestEnemy.getxPosition(),
+		this.turnsToReachEnemy = getTurnsToReachEnemy(this.getxPosition(),
+				this.getyPosition(), bestEnemy.getxPosition(),
 				bestEnemy.getyPosition());
 
 		for (Unit z : this.potentialEnemy) {
-			int testing = turnsToReachEnemy(this.getxPosition(), this.getyPosition(), z.getxPosition(),
-					z.getyPosition());
+			int testing = getTurnsToReachEnemy(this.getxPosition(),
+					this.getyPosition(), z.getxPosition(), z.getyPosition());
 
 			if (testing < this.turnsToReachEnemy) {
 				this.turnsToReachEnemy = testing;
@@ -100,17 +105,29 @@ public class AIUnit extends Unit {
 			if (z.getXPosition() == x && z.getYPosition() == y) {
 				return;
 			}
+			
 		}
-
-		int testing = turnsToReachEnemy(x, y, this.bestEnemy.getxPosition(), this.bestEnemy.getyPosition());
-		if (testing < this.turnsToReachEnemy) {
+		
+		
+		
+		
+		
+		
+		
+		/*
+		int testing = getTurnsToReachEnemy(x, y, this.bestEnemy.getxPosition(),
+				this.bestEnemy.getyPosition());
+		if (testing <= this.turnsToReachEnemy) {
 			this.turnsToReachEnemy = testing;
 			this.movetoX = x;
 			this.movetoY = y;
+		} else if (testing == this.turnsToReachEnemy) {
+			
 		}
+		*/
 	}
 
-	private int turnsToReachEnemy(int mx, int my, int ex, int ey) {
+	private int getTurnsToReachEnemy(int mx, int my, int ex, int ey) {
 		return Math.abs(mx - ex) + Math.abs(my - ey);
 	}
 
