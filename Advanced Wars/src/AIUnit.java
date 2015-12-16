@@ -29,7 +29,6 @@ public class AIUnit extends Unit {
 			x.closestEnemy();
 		}
 		for (AIUnit x : aiUnits) {
-			sortEnemy(x);
 			PathFinderAI.move(x, x.getxPosition(), x.getyPosition(), x.info.movement);
 			x.move();
 		}
@@ -37,52 +36,20 @@ public class AIUnit extends Unit {
 	}
 
 	private static void sortEnemy(AIUnit x) {
+		int similarEnemy = 0;
 		for (AIUnit z : AIUnit.aiUnits) {
-			int similarEnemy = 0;
-			if (z != x) {
-				for (AIUnit y : AIUnit.aiUnits) {
-					if (z != y) {
-						if (z.bestEnemy == y.bestEnemy) {
-							similarEnemy++;
-							if(similarEnemy > 3){
-								if (y.potentialEnemy.size() > 1) {
-									y.potentialEnemy.remove(y.bestEnemy);
-									y.closestEnemy();
-									System.out.println("new Target");
-									sortEnemy(y);
-									similarEnemy--;
-								}
-							}
-						}
-						
-					}
+			if(z != x){
+				if(z.bestEnemy == x.bestEnemy){
+					similarEnemy++;
 				}
-				if (z.bestEnemy == x.bestEnemy) {
-					if (similarEnemy > 3) {
-						if (x.potentialEnemy.size() > 1) {
-							x.potentialEnemy.remove(x.bestEnemy);
-							x.closestEnemy();
-							System.out.println("new Target");
-							sortEnemy(x);
-						}
-						/*
-						 * if (z.turnsToReachEnemy >= x.turnsToReachEnemy) { if
-						 * (z.potentialEnemy.size() >= 2) {
-						 * z.potentialEnemy.remove(z.bestEnemy);
-						 * z.this.turnsToReachEnemyEnemy(); System.out.println(
-						 * "new Target"); sortEnemy(z); }
-						 * 
-						 * } else { if (x.potentialEnemy.size() >= 2) {
-						 * 
-						 * x.potentialEnemy.remove(x.bestEnemy);
-						 * x.this.turnsToReachEnemyEnemy(); System.out.println(
-						 * "new Target"); sortEnemy(x); } }
-						 */
-					}
+				if(similarEnemy > 3){
+					x.potentialEnemy.remove(x.bestEnemy);
+					x.closestEnemy();
 				}
 			}
-		}
 
+			
+		}
 	}
 
 	private void closestEnemy() {
@@ -100,6 +67,7 @@ public class AIUnit extends Unit {
 				this.bestEnemy = z;
 			}
 		}
+		AIUnit.sortEnemy(this);
 	}
 
 	private void potentialEnemy() {

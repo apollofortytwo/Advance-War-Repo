@@ -24,6 +24,11 @@ public class SaveObject implements Serializable {
 	 *            (Unit that will be saved)
 	 */
 	public SaveObject(Unit unit) {
+		/*
+		Unit u = clone(unit);
+		u.sprite = null;
+		units.add(u);
+		*/
 		units.add(this);
 		this.x = unit.getxPosition();
 		this.y = unit.getyPosition();
