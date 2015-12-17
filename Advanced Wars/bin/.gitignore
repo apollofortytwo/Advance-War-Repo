@@ -74,3 +74,6 @@
 /SaveGame.class
 /SaveObject.class
 /AIPath.class
+/PathPointAI.class
+/Node.class
+/NodePath.class

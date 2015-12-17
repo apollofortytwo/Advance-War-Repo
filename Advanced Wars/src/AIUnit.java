@@ -10,7 +10,6 @@ public class AIUnit extends Unit {
 	public static List<AIUnit> aiUnits = new ArrayList<AIUnit>();
 
 	private List<Unit> potentialEnemy = new ArrayList<Unit>();
-	private List<AIPath> listOfPaths = new ArrayList<AIPath>();
 	
 	private int movetoX, movetoY;
 	private Unit bestEnemy;
@@ -108,23 +107,6 @@ public class AIUnit extends Unit {
 			
 		}
 		
-		
-		
-		
-		
-		
-		
-		/*
-		int testing = getTurnsToReachEnemy(x, y, this.bestEnemy.getxPosition(),
-				this.bestEnemy.getyPosition());
-		if (testing <= this.turnsToReachEnemy) {
-			this.turnsToReachEnemy = testing;
-			this.movetoX = x;
-			this.movetoY = y;
-		} else if (testing == this.turnsToReachEnemy) {
-			
-		}
-		*/
 	}
 
 	private int getTurnsToReachEnemy(int mx, int my, int ex, int ey) {
