@@ -11,12 +11,16 @@ public class AIUnit extends Unit {
 
 	private List<Unit> potentialEnemy = new ArrayList<Unit>();
 	
-	private int movetoX, movetoY;
+	int movetoX;
+
+	int movetoY;
 	private Unit bestEnemy;
 	private int turnsToReachEnemy;
 
 	public AIUnit(int xPosition, int yPosition, String unit, String team) {
 		super(xPosition, yPosition, unit, team);
+		Unit.UnitsArray.remove(this);
+		
 		aiUnits.add(this);
 
 	}
@@ -29,8 +33,9 @@ public class AIUnit extends Unit {
 			x.closestEnemy();
 		}
 		for (AIUnit x : aiUnits) {
-			PathFinderAI.move(x, x.getxPosition(), x.getyPosition(),
-					((int) Application.HEIGHT * Application.WIDTH));
+			NodePath path = new NodePath(x.getxPosition(), x.getyPosition(), x.getBestEnemy().getxPosition(), x.getBestEnemy().getyPosition());
+			x.movetoX = path.path.get(x.info.movement).getxPosition();
+			x.movetoY = path.path.get(x.info.movement).getyPosition();
 			x.move();
 		}
 
@@ -84,31 +89,6 @@ public class AIUnit extends Unit {
 		}
 	}
 
-	public void potentialMove(int x, int y) {
-		for (Unit z : Unit.UnitsArray) {
-			if (z.getxPosition() == x && z.getyPosition() == y) {
-				return;
-			}
-		}
-		for (AIUnit z : AIUnit.aiUnits) {
-			if (z.movetoX == x && z.movetoY == y) {
-				return;
-			}
-		}
-		for (Building z : Building.buildingsArray) {
-			if (z.getxPosition() == x && z.getyPosition() == y) {
-				return;
-			}
-		}
-		for (NeutralBuilding z : NeutralBuilding.nbuildingsArray) {
-			if (z.getXPosition() == x && z.getYPosition() == y) {
-				return;
-			}
-			
-		}
-		
-	}
-
 	private int getTurnsToReachEnemy(int mx, int my, int ex, int ey) {
 		return Math.abs(mx - ex) + Math.abs(my - ey);
 	}
@@ -117,8 +97,12 @@ public class AIUnit extends Unit {
 		Interface.unitPanel.removeAll();
 		Interface.unitPanel.setLayout(new TableLayout(Application.size));
 		this.setCordinates(this.movetoX, this.movetoY);
+		System.out.println("MOVED TO: " + this.movetoX +", "+ this.movetoY);
 
 		for (Unit x : Unit.UnitsArray) {
+			Interface.unitPanel.add(x, x.getxPosition(), x.getyPosition());
+		}
+		for (Unit x : AIUnit.aiUnits) {
 			Interface.unitPanel.add(x, x.getxPosition(), x.getyPosition());
 		}
 
@@ -129,7 +113,7 @@ public class AIUnit extends Unit {
 		Interface.unitPanel.repaint();
 	}
 
-	public Object getBestEnemy() {
+	public Unit getBestEnemy() {
 		return bestEnemy;
 	}
 

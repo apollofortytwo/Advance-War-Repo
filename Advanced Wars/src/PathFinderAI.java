@@ -41,7 +41,6 @@ public class PathFinderAI extends PathFinders {
 					} else {
 						unit.potentialMove(x, y - 1);
 						move(unit, x, y - 1, distance - 1);
-
 					}
 				}
 			} catch (Exception e) {

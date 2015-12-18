@@ -11,6 +11,7 @@ public class MapEntityLoader {
 
 	private void moba() {
 		if(ai){
+			/*
 			new AIUnit(17, 1, "TANK", "Red");
 			new AIUnit(18, 2, "TANK", "Red");
 			new AIUnit(16, 1, "INFANTRY", "Red");
@@ -19,6 +20,7 @@ public class MapEntityLoader {
 			new AIUnit(17, 2, "INFANTRY", "Red");
 			new AIUnit(15, 2, "HELICOPTER", "Red");
 			new AIUnit(17, 4, "HELICOPTER", "Red");
+			*/
 			new AIUnit(18, 1, "ARTILLERY", "Red");
 			
 		}else{
