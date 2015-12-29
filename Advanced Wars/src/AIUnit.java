@@ -10,7 +10,7 @@ public class AIUnit extends Unit {
 	public static List<AIUnit> aiUnits = new ArrayList<AIUnit>();
 
 	private List<Unit> potentialEnemy = new ArrayList<Unit>();
-	
+
 	int movetoX;
 
 	int movetoY;
@@ -19,26 +19,41 @@ public class AIUnit extends Unit {
 
 	public AIUnit(int xPosition, int yPosition, String unit, String team) {
 		super(xPosition, yPosition, unit, team);
-		Unit.UnitsArray.remove(this);
-		
+
 		aiUnits.add(this);
 
 	}
 
 	public static void moveAIs() {
-		System.out.println("MOVE AI");
+		System.out.println("MOVING AI");
 
 		for (AIUnit x : aiUnits) {
 			x.potentialEnemy();
 			x.closestEnemy();
 		}
-		for (AIUnit x : aiUnits) {
-			NodePath path = new NodePath(x.getxPosition(), x.getyPosition(), x.getBestEnemy().getxPosition(), x.getBestEnemy().getyPosition());
-			x.movetoX = path.path.get(x.info.movement).getxPosition();
-			x.movetoY = path.path.get(x.info.movement).getyPosition();
-			x.move();
+		for(int i = 0; i <= aiUnits.size(); i++){
+			nextToMove().findPath();
 		}
+	}
+	private List<Node> findPath(){
+		NodePath nodePath = new NodePath(this, this.bestEnemy);
+		return nodePath.path; 
+	}
 
+	private static AIUnit nextToMove() {
+		AIUnit nextToMove = null;
+		for (AIUnit x : aiUnits) {
+			if (!x.isMoved()) {
+				if (x.turnsToReachEnemy < nextToMove.turnsToReachEnemy) {
+					nextToMove = x;
+				} else if (x.turnsToReachEnemy == nextToMove.turnsToReachEnemy) {
+					if (x.info.movement > nextToMove.info.movement) {
+						nextToMove = x;
+					}
+				}
+			}
+		}
+		return nextToMove;
 	}
 
 	private static void sortEnemy(AIUnit x) {
@@ -63,13 +78,12 @@ public class AIUnit extends Unit {
 	private void closestEnemy() {
 		this.bestEnemy = this.potentialEnemy.get(0);
 
-		this.turnsToReachEnemy = getTurnsToReachEnemy(this.getxPosition(),
-				this.getyPosition(), bestEnemy.getxPosition(),
-				bestEnemy.getyPosition());
+		this.turnsToReachEnemy = getTurnsToReachEnemy(this.getxPosition(), this.getyPosition(),
+				bestEnemy.getxPosition(), bestEnemy.getyPosition());
 
 		for (Unit z : this.potentialEnemy) {
-			int testing = getTurnsToReachEnemy(this.getxPosition(),
-					this.getyPosition(), z.getxPosition(), z.getyPosition());
+			int testing = getTurnsToReachEnemy(this.getxPosition(), this.getyPosition(), z.getxPosition(),
+					z.getyPosition());
 
 			if (testing < this.turnsToReachEnemy) {
 				this.turnsToReachEnemy = testing;
@@ -97,7 +111,7 @@ public class AIUnit extends Unit {
 		Interface.unitPanel.removeAll();
 		Interface.unitPanel.setLayout(new TableLayout(Application.size));
 		this.setCordinates(this.movetoX, this.movetoY);
-		System.out.println("MOVED TO: " + this.movetoX +", "+ this.movetoY);
+		System.out.println("MOVED TO: " + this.movetoX + ", " + this.movetoY);
 
 		for (Unit x : Unit.UnitsArray) {
 			Interface.unitPanel.add(x, x.getxPosition(), x.getyPosition());
