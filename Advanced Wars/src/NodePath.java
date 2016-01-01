@@ -14,7 +14,7 @@ public class NodePath {
 	public NodePath(Unit start, Unit end) {
 		endNode = new Node(end.getxPosition(), end.getyPosition(), null);
 		startNode = new Node(start.getxPosition(), start.getyPosition(), endNode);
-		startNode.setStatus(1);
+		startNode.setStatus(NodeStatus.OPEN);
 		initMap();
 		map[endNode.getxPosition()][endNode.getyPosition()] = endNode;
 		map[startNode.getxPosition()][startNode.getyPosition()] = startNode;
@@ -49,7 +49,7 @@ public class NodePath {
 												// of Nodes
 			for (int row = 0; row < 20; row++) {
 
-				if (map[col][row].getStatus() == 1) { // Check if the node
+				if (map[col][row].getStatus() == NodeStatus.OPEN) { // Check if the node
 														// is
 														// open(1)
 					if (closest == null) {
@@ -119,7 +119,7 @@ public class NodePath {
 			createPath();
 
 		} else {
-			expand.setStatus(2);
+			expand.setStatus(NodeStatus.CLOSED);
 			expand(findClosestOpenNodeToEndNode());
 
 		}

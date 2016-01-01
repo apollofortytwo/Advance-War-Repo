@@ -32,7 +32,13 @@ public class AIUnit extends Unit {
 			x.closestEnemy();
 		}
 		for (int i = 0; i <= aiUnits.size(); i++) {
-			nextToMove().move(nextToMove().findPath());
+			//Find the next Best Unit to move
+			AIUnit selected = nextToMove();
+			//Find Path
+			List<Node> path = selected.findPath();
+			//Apply Path
+			selected.move(path);
+			
 		}
 	}
 
@@ -115,7 +121,7 @@ public class AIUnit extends Unit {
 		
 		Interface.unitPanel.removeAll();
 		Interface.unitPanel.setLayout(new TableLayout(Application.size));
-		this.setCordinates(list.get(5).getxPosition(), list.get(5).getxPosition());
+		this.setCordinates(list.get(2).getxPosition(), list.get(2).getxPosition());
 		System.out.println("MOVED TO: " + this.movetoX + ", " + this.movetoY);
 
 		for (Unit x : Unit.UnitsArray) {

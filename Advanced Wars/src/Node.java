@@ -58,10 +58,10 @@ public class Node {
 	private boolean hasMovedUnit = false;
 	private boolean hasTerrain = false;
 
-	private int status;
+	private NodeStatus status;
 
 	Node(int xPosition, int yPosition, Node enemy) {
-		this.status = 0;
+		this.status = NodeStatus.UNVISITED;
 
 		this.yPosition = yPosition;
 		this.xPosition = xPosition;
@@ -78,7 +78,7 @@ public class Node {
 			for (int y = 0; y < Application.HEIGHT; y++) {
 				if (Terrain.terrainArray[x][y].isObstacle) {
 					if (this.xPosition == x && this.yPosition == y) {
-						this.setStatus(2);
+						this.setStatus(NodeStatus.CLOSED);
 					}
 				}
 			}
@@ -93,10 +93,10 @@ public class Node {
 
 	public void setParent(Node parent) {
 
-		if (this.status == 0) {
+		if (this.status == NodeStatus.UNVISITED) {
 			this.parent = parent;
 			this.moveCost = parent.moveCost + this.distanceToEnemy;
-			this.setStatus(1);
+			this.setStatus(NodeStatus.OPEN);
 		}
 	}
 
@@ -104,11 +104,11 @@ public class Node {
 		return Math.abs(mx - ex) + Math.abs(my - ey);
 	}
 
-	public int getStatus() {
+	public NodeStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(NodeStatus status) {
 		this.status = status;
 	}
 
