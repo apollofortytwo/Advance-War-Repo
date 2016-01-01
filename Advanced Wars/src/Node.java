@@ -78,7 +78,6 @@ public class Node {
 			for (int y = 0; y < Application.HEIGHT; y++) {
 				if (Terrain.terrainArray[x][y].isObstacle) {
 					if (this.xPosition == x && this.yPosition == y) {
-						this.setHasTerrain(true);
 						this.setStatus(2);
 					}
 				}

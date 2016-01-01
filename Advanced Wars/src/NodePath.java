@@ -27,9 +27,9 @@ public class NodePath {
 		for (int x = 0; x < Application.WIDTH; x++) {
 			for (int y = 0; y < Application.HEIGHT; y++) {
 				if (x == endNode.getxPosition() && y == endNode.getyPosition()) {
-
+					System.out.println("BLOCKED");
 				} else if (x == startNode.getxPosition() && y == startNode.getyPosition()) {
-
+					System.out.println("BLOCKED");
 				} else {
 					map[x][y] = new Node(x, y, endNode);
 				}
@@ -46,7 +46,7 @@ public class NodePath {
 		Node closest = null;
 
 		for (int col = 0; col < 20; col++) { // go through the list
-														// of Nodes
+												// of Nodes
 			for (int row = 0; row < 20; row++) {
 
 				if (map[col][row].getStatus() == 1) { // Check if the node
@@ -54,8 +54,8 @@ public class NodePath {
 														// open(1)
 					if (closest == null) {
 						closest = map[col][row];
-					}else{
-						
+					} else {
+
 						if (map[col][row].getMoveCost() < closest.getMoveCost()) {
 							closest = map[col][row];
 						}
@@ -68,7 +68,7 @@ public class NodePath {
 		if (endNode.getParent() != null) {
 			createPath();
 		}
-		if (closest == null){
+		if (closest == null) {
 			createPath();
 		}
 		return closest;
@@ -93,7 +93,7 @@ public class NodePath {
 	}
 
 	private final void expand(Node expand) {
-		
+
 		try {
 			map[expand.getxPosition() + 1][expand.getyPosition()].setParent(expand);
 		} catch (Exception e) {
@@ -115,14 +115,13 @@ public class NodePath {
 
 		}
 
-		
 		if (endNode.getParent() != null) {
 			createPath();
 
-		}else{
+		} else {
 			expand.setStatus(2);
 			expand(findClosestOpenNodeToEndNode());
-			
+
 		}
 	}
 }
