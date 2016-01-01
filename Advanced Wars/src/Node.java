@@ -1,55 +1,131 @@
 
 public class Node {
 
-	int xPosition;
-	int yPosition;
+	private int xPosition;
+	private int yPosition;
 
-	int distanceToEnemy;
-	int moveCost;
+	private int distanceToEnemy;
 
-	Node parent;
-	Node enemy;
+	public int getxPosition() {
+		return xPosition;
+	}
 
-	boolean hasMovedUnit = false;
-	boolean hasTerrain = false;
+	public void setxPosition(int xPosition) {
+		this.xPosition = xPosition;
+	}
+
+	public int getyPosition() {
+		return yPosition;
+	}
+
+	public void setyPosition(int yPosition) {
+		this.yPosition = yPosition;
+	}
+
+	public int getDistanceToEnemy() {
+		return distanceToEnemy;
+	}
+
+	public void setDistanceToEnemy(int distanceToEnemy) {
+		this.distanceToEnemy = distanceToEnemy;
+	}
+
+	public int getMoveCost() {
+		return moveCost;
+	}
+
+	public void setMoveCost(int moveCost) {
+		this.moveCost = moveCost;
+	}
+
+	public Node getEnemy() {
+		return enemy;
+	}
+
+	public void setEnemy(Node enemy) {
+		this.enemy = enemy;
+	}
+
+	public Node getParent() {
+		return parent;
+	}
+
+	private int moveCost;
+
+	private Node parent;
+	private Node enemy;
+
+	private boolean hasMovedUnit = false;
+	private boolean hasTerrain = false;
+
+	private int status;
 
 	Node(int xPosition, int yPosition, Node enemy) {
+		this.status = 0;
+
 		this.yPosition = yPosition;
 		this.xPosition = xPosition;
 		this.enemy = enemy;
 
-		this.distanceToEnemy = distanceToNode(this.xPosition, this.yPosition, this.enemy.xPosition,
-				this.enemy.yPosition);
-		
+		if (this.enemy == null) {
+			this.distanceToEnemy = 0;
+		} else {
+			this.distanceToEnemy = distanceToNode(this.xPosition, this.yPosition, this.enemy.xPosition,
+					this.enemy.yPosition);
+		}
+
 		for (int x = 0; x < Application.WIDTH; x++) {
 			for (int y = 0; y < Application.HEIGHT; y++) {
-				if(Terrain.terrainArray[x][y].isObstacle){
-					if(this.xPosition == x && this.yPosition == y){
-						this.hasTerrain = true;
+				if (Terrain.terrainArray[x][y].isObstacle) {
+					if (this.xPosition == x && this.yPosition == y) {
+						this.setHasTerrain(true);
+						this.setStatus(2);
 					}
 				}
 			}
 		}
-		
-		for(Unit unit: Unit.UnitsArray){
-			if(unit.isMoved()){
-				if(unit.getxPosition() == this.xPosition && unit.getyPosition() == this.yPosition){
-					this.hasMovedUnit = true;
-				}		
-			}
-		}
+		/*
+		 * for (Unit unit : Unit.UnitsArray) { if (unit.isMoved()) { if
+		 * (unit.getxPosition() == this.xPosition && unit.getyPosition() ==
+		 * this.yPosition) { this.setHasMovedUnit(true); this.setStatus(2); } }
+		 * }
+		 */
 	}
-	
-	public void setParent(Node parent){
-		if(this.parent  == null){
+
+	public void setParent(Node parent) {
+
+		if (this.status == 0) {
 			this.parent = parent;
 			this.moveCost = parent.moveCost + this.distanceToEnemy;
+			this.setStatus(1);
 		}
 	}
-	
-	
 
 	private int distanceToNode(int mx, int my, int ex, int ey) {
 		return Math.abs(mx - ex) + Math.abs(my - ey);
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public boolean isHasMovedUnit() {
+		return hasMovedUnit;
+	}
+
+	public void setHasMovedUnit(boolean hasMovedUnit) {
+		this.hasMovedUnit = hasMovedUnit;
+	}
+
+	public boolean isHasTerrain() {
+		return hasTerrain;
+	}
+
+	public void setHasTerrain(boolean hasTerrain) {
+		this.hasTerrain = hasTerrain;
 	}
 }

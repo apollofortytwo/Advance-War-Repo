@@ -31,20 +31,24 @@ public class AIUnit extends Unit {
 			x.potentialEnemy();
 			x.closestEnemy();
 		}
-		for(int i = 0; i <= aiUnits.size(); i++){
-			nextToMove().findPath();
+		for (int i = 0; i <= aiUnits.size(); i++) {
+			nextToMove().move(nextToMove().findPath());
 		}
 	}
-	private List<Node> findPath(){
+
+	private List<Node> findPath() {
 		NodePath nodePath = new NodePath(this, this.bestEnemy);
-		return nodePath.path; 
+		System.out.println(nodePath.getPath().size());
+		return nodePath.getPath();
 	}
 
 	private static AIUnit nextToMove() {
 		AIUnit nextToMove = null;
 		for (AIUnit x : aiUnits) {
 			if (!x.isMoved()) {
-				if (x.turnsToReachEnemy < nextToMove.turnsToReachEnemy) {
+				if (nextToMove == null) {
+					nextToMove = x;
+				} else if (x.turnsToReachEnemy < nextToMove.turnsToReachEnemy) {
 					nextToMove = x;
 				} else if (x.turnsToReachEnemy == nextToMove.turnsToReachEnemy) {
 					if (x.info.movement > nextToMove.info.movement) {
@@ -107,10 +111,11 @@ public class AIUnit extends Unit {
 		return Math.abs(mx - ex) + Math.abs(my - ey);
 	}
 
-	private void move() {
+	private void move(List<Node> list) {
+		
 		Interface.unitPanel.removeAll();
 		Interface.unitPanel.setLayout(new TableLayout(Application.size));
-		this.setCordinates(this.movetoX, this.movetoY);
+		this.setCordinates(list.get(5).getxPosition(), list.get(5).getxPosition());
 		System.out.println("MOVED TO: " + this.movetoX + ", " + this.movetoY);
 
 		for (Unit x : Unit.UnitsArray) {
