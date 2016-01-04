@@ -1,4 +1,5 @@
 
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
@@ -20,7 +21,7 @@ class Unit extends JLabel implements MouseListener {
 
 	public static void resetUnits() {
 		for (Unit x : Unit.UnitsArray) {
-			x.setIcon(new ImageIcon(x.getSprites().idle));
+			x.setIcon(new ImageIcon(x.unitSprite));
 			if (!x.getTeam().equals(TurnPanel.turnText)) {
 				x.setMoved(true);
 				x.setAttacked(true);
@@ -48,7 +49,7 @@ class Unit extends JLabel implements MouseListener {
 	private boolean moved = false, attacked = false;
 	private String type, enemy, team;
 
-	private Sprite sprites;
+	Image unitSprite, unitGrayyed;
 
 	public UnitInfo info;
 
@@ -81,14 +82,16 @@ class Unit extends JLabel implements MouseListener {
 		this.team = team;
 		this.setEnemy();
 
-		this.setSprites(new Sprite(team, type));
+		this.unitSprite = SpriteLoader.getSprite(team+unit);
+		this.unitGrayyed = SpriteLoader.getSprite(team+unit+"_Sleep");
+		
 
 		info = new UnitInfo(unit);
 
 		infoPanel = new UnitInfoPanel(this);
 		infoPanel.updateToPanel();
 
-		this.setIcon(new ImageIcon(sprites.idle));
+		this.setIcon(new ImageIcon(this.unitSprite));
 
 		healthLabel = new HealthLabel(this.info.health);
 
@@ -167,9 +170,7 @@ class Unit extends JLabel implements MouseListener {
 		return info;
 	}
 
-	public Sprite getSprites() {
-		return sprites;
-	}
+
 
 	public String getTeam() {
 		return team;
@@ -188,7 +189,7 @@ class Unit extends JLabel implements MouseListener {
 	}
 
 	public void gray() {
-		this.setIcon(new ImageIcon(this.getSprites().grayyed));
+		this.setIcon(new ImageIcon(this.unitGrayyed));
 	}
 
 	public boolean isAttacked() {
@@ -301,9 +302,6 @@ class Unit extends JLabel implements MouseListener {
 		this.moved = moved;
 	}
 
-	private void setSprites(Sprite sprites) {
-		this.sprites = sprites;
-	}
 
 	public void setxPosition(int xPosition) {
 		this.xPosition = xPosition;

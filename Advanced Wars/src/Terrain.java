@@ -20,7 +20,8 @@ public class Terrain extends JLabel implements MouseListener {
 		for (int x = 0; x < Application.WIDTH; x++) {
 			for (int y = 0; y < Application.HEIGHT; y++) {
 				Terrain.terrainArray[x][y] = new Terrain(x, y, type);
-				Interface.tilePanel.add(Terrain.terrainArray[x][y], Integer.toString(x) + "," + Integer.toString(y));
+				Interface.tilePanel.add(Terrain.terrainArray[x][y],
+						Integer.toString(x) + "," + Integer.toString(y));
 			}
 		}
 	}
@@ -39,7 +40,7 @@ public class Terrain extends JLabel implements MouseListener {
 	}
 
 	private String type;
-	Sprite sprites;
+	Image terrainSprite, terrainSpriteBlue, terrainSpriteRed;
 	private int xPosition, yPosition;
 	public boolean isObstacle = false;
 	public boolean isMoveable = false;
@@ -66,35 +67,50 @@ public class Terrain extends JLabel implements MouseListener {
 	 *            (Type of Terrain being Created)
 	 */
 	public Terrain(int x, int y, String type) {
-		
+
 		this.type = type;
-		//this.setPreferredSize(new Dimension(32, 32));
+		// this.setPreferredSize(new Dimension(32, 32));
 
 		setXPosition(x);
 		setYPosition(y);
-		this.sprites = new Sprite(type, 5);
-
-		this.setIcon(new ImageIcon(sprites.terrain));
 		
+		if(type.equals("Trees")){
+			this.isObstacle = true;
+		}
+
+		if(type.equals("Water")){
+			this.isWater = true;
+		}
+		
+		this.terrainSprite = SpriteLoader.getSprite(type);
+		this.terrainSpriteBlue = SpriteLoader.getSprite(type + "_Blue");
+		this.terrainSpriteRed = SpriteLoader.getSprite(type + "_Red");
+
+		this.setIcon(new ImageIcon(terrainSprite));
+
 		this.addMouseListener(this);
 
-		Interface.tilePanel.add(this, Integer.toString(x) + "," + Integer.toString(y));
+		Interface.tilePanel.add(this,
+				Integer.toString(x) + "," + Integer.toString(y));
 
 	}
-	public void resizeSprites(int width, int height){
-		sprites.terrain = sprites.terrain.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+
+	public void resizeSprites(int width, int height) {
+		// sprites.terrain = sprites.terrain.getScaledInstance(width, height,
+		// Image.SCALE_DEFAULT);
 
 		Interface.tilePanel.remove(this);
-		
-		Interface.tilePanel.add(this, Integer.toString(this.xPosition) + "," + Integer.toString(this.yPosition));
-		this.setIcon(new ImageIcon(sprites.terrain));
-		
+
+		Interface.tilePanel.add(this, Integer.toString(this.xPosition) + ","
+				+ Integer.toString(this.yPosition));
+		this.setIcon(new ImageIcon(terrainSprite));
+
 		Interface.tilePanel.revalidate();
 		Interface.tilePanel.repaint();
-	
-		
+
 	}
 
+	
 	public boolean getIsAttackable() {
 		return isAttackable;
 	}
@@ -115,7 +131,7 @@ public class Terrain extends JLabel implements MouseListener {
 	 * Allow for unit to move on this Terrains location
 	 */
 	public void highlight() {
-		this.setIcon(new ImageIcon(sprites.sprite_Blue));
+		this.setIcon(new ImageIcon(this.terrainSpriteBlue));
 		isMoveable = true;
 		Interface.unitPanel.revalidate();
 		Interface.unitPanel.repaint();
@@ -131,7 +147,7 @@ public class Terrain extends JLabel implements MouseListener {
 	public void highlight(String action) {
 
 		if (!this.isMoveable) {
-			this.setIcon(new ImageIcon(sprites.sprite_Red));
+			this.setIcon(new ImageIcon(this.terrainSpriteRed));
 		}
 		if (action.equals("CAPTURE")) {
 			setCapturable(true);
@@ -193,8 +209,8 @@ public class Terrain extends JLabel implements MouseListener {
 	 * take the ability to do actions with Units off this terrain
 	 */
 	private void restore() {
-		if (this.getIcon() != sprites.terrain) {
-			this.setIcon(new ImageIcon(sprites.terrain));
+		if (this.getIcon() != this.terrainSprite) {
+			this.setIcon(new ImageIcon(this.terrainSprite));
 			this.isMoveable = false;
 			this.isCapturable = false;
 			this.isAttackable = false;

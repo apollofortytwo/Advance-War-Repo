@@ -1,4 +1,5 @@
 
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class Building extends JLabel implements MouseListener {
 	private int xPosition;
 	private int yPosition;
 	public int health;
-	public Sprite sprites;
+	Image buildingSprite, buildingSpriteDestroyed;
 	private boolean isDead = false;
 	private int timeOfProduction, endTimeOfProduction;
 
@@ -82,9 +83,11 @@ public class Building extends JLabel implements MouseListener {
 		setyPosition(y);
 		this.setLayout(null);
 
-		sprites = new Sprite(team);
+		this.buildingSprite = SpriteLoader.getSprite(team+"_Building");
+		this.buildingSpriteDestroyed = SpriteLoader.getSprite(team+"_Building_Destroyed");
+		
 
-		this.setIcon(new ImageIcon(sprites.idle));
+		this.setIcon(new ImageIcon(this.buildingSprite));
 
 		healthLabel = new HealthLabel(this.health);
 
@@ -104,7 +107,7 @@ public class Building extends JLabel implements MouseListener {
 	}
 
 	private void dead() {
-		this.setIcon(new ImageIcon(sprites.destroyed));
+		this.setIcon(new ImageIcon(this.buildingSpriteDestroyed));
 		this.setDead(true);
 		Interface.tilePanel.repaint();
 		Interface.tilePanel.revalidate();
@@ -179,7 +182,7 @@ public class Building extends JLabel implements MouseListener {
 				System.out.println("health: " + health);
 				Unit.selectedUnit.setMoved(true);
 				Unit.selectedUnit.setAttacked(true);
-				Unit.selectedUnit.setIcon(new ImageIcon(Unit.selectedUnit.getSprites().grayyed));
+				Unit.selectedUnit.gray();
 
 				Terrain.restoreAllTileStatus();
 			}

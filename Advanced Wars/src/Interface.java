@@ -93,70 +93,8 @@ public class Interface {
 	}
 
 	public static void frame() {
-		class ResizeListener implements ComponentListener {
-
-			public void componentHidden(ComponentEvent e) {
-			}
-
-			public void componentMoved(ComponentEvent e) {
-			}
-
-			public void componentShown(ComponentEvent e) {
-			}
-
-			public void componentResized(ComponentEvent e) {
-				Dimension newSize = e.getComponent().getBounds().getSize();
-				System.out.println(newSize.getWidth() + ", " + newSize.getHeight());
-
-				double n = ((newSize.getWidth() - 440) / 20);
-
-				System.out.println(n);
-
-				for (int row = 0; row < 20; row++) {
-					for (int col = 0; col < 20; col++) {
-						Terrain.terrainArray[row][col].resizeSprites((int) n, (int) n);
-
-					}
-
-				}
-
-				Application.size = new double[][] {
-						{ 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 }, // Columns
-						{ 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 } // Rows;
-				};
-				;
-				Application.setTable();
-
-				/*
-				 * Application.size = new double[][] { { n, n, n, n, n, n, n, n,
-				 * n, n, n, n, n, n, n, n, n, n, n, n }, // Columns { n, n, n,
-				 * n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n } // Rows;
-				 * }; ;
-				 */
-
-				tilePanel.setSize((int) n * Application.WIDTH, (int) n * Application.HEIGHT);
-				unitPanel.setSize((int) n * Application.WIDTH, (int) n * Application.HEIGHT);
-				attackingSpritePanel.setSize((int) n * Application.WIDTH, (int) n * Application.HEIGHT);
-
-				tilePanel.setLayout(new TableLayout(Application.size));
-				unitPanel.setLayout(new TableLayout(Application.size));
-
-				attackingSpritePanel.setLayout(new TableLayout(Application.size));
-
-				tilePanel.revalidate();
-				tilePanel.repaint();
-
-				unitPanel.revalidate();
-				unitPanel.repaint();
-				layer.revalidate();
-				layer.repaint();
-
-			}
-
-		}
-
+		
 		mainFrame = new JFrame("Advanced wars");
-		mainFrame.addComponentListener(new ResizeListener());
 
 		mainFrame.setSize(1080, 720);
 		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

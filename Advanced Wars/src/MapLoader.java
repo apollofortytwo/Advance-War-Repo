@@ -26,7 +26,7 @@ public class MapLoader {
 				if (Terrain.terrainArray[xTree[i]][yTree[i]] != null) {
 					Interface.tilePanel.remove(Terrain.terrainArray[xTree[i]][yTree[i]]);
 				}
-				Terrain.terrainArray[xTree[i]][yTree[i]] = new Terrain(xTree[i], yTree[i], "TREE");
+				Terrain.terrainArray[xTree[i]][yTree[i]] = new Terrain(xTree[i], yTree[i], "Trees");
 
 			}
 
@@ -40,7 +40,7 @@ public class MapLoader {
 				if (Terrain.terrainArray[xWater[i]][yWater[i]] != null) {
 					Interface.tilePanel.remove(Terrain.terrainArray[xWater[i]][yWater[i]]);
 				}
-				Terrain.terrainArray[xWater[i]][yWater[i]] = new Terrain(xWater[i], yWater[i], "WATER");
+				Terrain.terrainArray[xWater[i]][yWater[i]] = new Terrain(xWater[i], yWater[i], "Water");
 
 			}
 
@@ -54,7 +54,7 @@ public class MapLoader {
 				if (Terrain.terrainArray[xConcrete[i]][yConcrete[i]] != null) {
 					Interface.tilePanel.remove(Terrain.terrainArray[xConcrete[i]][yConcrete[i]]);
 				}
-				Terrain.terrainArray[xConcrete[i]][yConcrete[i]] = new Terrain(xConcrete[i], yConcrete[i], "CONCRETE");
+				Terrain.terrainArray[xConcrete[i]][yConcrete[i]] = new Terrain(xConcrete[i], yConcrete[i], "Concrete");
 
 			}
 
