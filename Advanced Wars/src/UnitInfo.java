@@ -2,6 +2,10 @@
 import java.io.Serializable;
 
 public class UnitInfo implements Serializable {
+	
+	
+	
+	
 	public static int getProductionTime(String unit) {
 		if (unit.equals("TANK")) {
 			return 10;

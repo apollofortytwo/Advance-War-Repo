@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 import layout.TableLayout;
 
-class Unit extends JLabel implements MouseListener, Serializable {
+class Unit extends JLabel implements MouseListener {
 
 	public static Unit selectedUnit = null;
 
@@ -51,6 +51,8 @@ class Unit extends JLabel implements MouseListener, Serializable {
 	private Sprite sprites;
 
 	public UnitInfo info;
+
+	private float unitInfluence;
 
 	private HealthLabel healthLabel;
 
@@ -143,6 +145,17 @@ class Unit extends JLabel implements MouseListener, Serializable {
 			Interface.blueTeamInfo.increaseNumberOfKills();
 		}
 		Unit.UnitsArray.remove(this);
+
+	}
+
+	/**
+	 * how much threat does this unit and it's stats pose???
+	 * 
+	 * Value of Influence is based on: health, attack damage, movement, and
+	 * range
+	 */
+	public void CalculateUnitInfluence() {
+		unitInfluence = this.info.health + this.info.attack + this.info.movement + this.info.range;
 
 	}
 
@@ -260,7 +273,7 @@ class Unit extends JLabel implements MouseListener, Serializable {
 		Interface.unitPanel.removeAll();
 		Interface.unitPanel.setLayout(new TableLayout(Application.size));
 		Unit.selectedUnit.setCordinates(x, y);
-		for(Unit z: Unit.UnitsArray){
+		for (Unit z : Unit.UnitsArray) {
 			Interface.unitPanel.add(z, z.getxPosition(), z.getyPosition());
 		}
 		Unit.selectedUnit.setMoved(true);
@@ -302,6 +315,14 @@ class Unit extends JLabel implements MouseListener, Serializable {
 
 	public void updateHealthLabel() {
 		healthLabel.setText(Integer.toString(this.info.health));
+	}
+
+	public float getUnitInfluence() {
+		return unitInfluence;
+	}
+
+	public void setUnitInfluence(float unitInfluence) {
+		this.unitInfluence = unitInfluence;
 	}
 
 }

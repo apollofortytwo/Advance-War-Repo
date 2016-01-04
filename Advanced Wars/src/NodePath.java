@@ -1,4 +1,5 @@
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,13 +12,21 @@ public class NodePath {
 	Node endNode;
 	Node startNode;
 
-	public NodePath(Unit start, Unit end) {
-		endNode = new Node(end.getxPosition(), end.getyPosition(), null);
+	public NodePath(Unit start, Point cord) {
+
+		endNode = new Node(cord.x, cord.y, null);
 		startNode = new Node(start.getxPosition(), start.getyPosition(), endNode);
+		if (start.getxPosition() == cord.x && start.getyPosition() == cord.y) {
+			this.createPath();
+			return;
+		}
+
 		startNode.setStatus(NodeStatus.OPEN);
+
 		initMap();
-		map[endNode.getxPosition()][endNode.getyPosition()] = endNode;
-		map[startNode.getxPosition()][startNode.getyPosition()] = startNode;
+
+		startNode.setStatus(NodeStatus.OPEN);
+		endNode.setStatus(NodeStatus.UNVISITED);
 
 		expand(findClosestOpenNodeToEndNode());
 	}
@@ -25,13 +34,18 @@ public class NodePath {
 	private void initMap() {
 		// create node map
 		for (int x = 0; x < Application.WIDTH; x++) {
+
 			for (int y = 0; y < Application.HEIGHT; y++) {
+
 				if (x == endNode.getxPosition() && y == endNode.getyPosition()) {
-					System.out.println("BLOCKED");
+					map[x][y] = endNode;
+
 				} else if (x == startNode.getxPosition() && y == startNode.getyPosition()) {
-					System.out.println("BLOCKED");
+					map[x][y] = startNode;
+
 				} else {
 					map[x][y] = new Node(x, y, endNode);
+
 				}
 			}
 
@@ -49,9 +63,10 @@ public class NodePath {
 												// of Nodes
 			for (int row = 0; row < 20; row++) {
 
-				if (map[col][row].getStatus() == NodeStatus.OPEN) { // Check if the node
-														// is
-														// open(1)
+				if (map[col][row].getStatus() == NodeStatus.OPEN) { // Check if
+																	// the node
+					// is
+					// open(1)
 					if (closest == null) {
 						closest = map[col][row];
 					} else {
@@ -65,34 +80,58 @@ public class NodePath {
 
 			}
 		}
-		if (endNode.getParent() != null) {
-			createPath();
-		}
-		if (closest == null) {
-			createPath();
-		}
+
 		return closest;
 
 	}
 
 	private final void createPath() {
-		addToPath(endNode);
-		System.out.println("PATH CREATED");
-		System.out.println(path.size());
+		addToPathLoopParents(endNode);
+		// path.remove(0);
 		Collections.reverse(path);
 
 	}
 
-	private final void addToPath(Node node) {
+	private final void addToPathLoopParents(Node node) {
+		Terrain.terrainArray[node.getxPosition()][node.getyPosition()].highlight();
 		path.add(node);
 		if (node.getParent() == null) {
 			return;
 		}
-		addToPath(node.getParent());
+		addToPathLoopParents(node.getParent());
+
+	}
+
+	/**
+	 * If the NodePath wasn't able to find a path. It's because of the moved
+	 * Unit blocking the Path. This Method re-makes the Node Path with no moved
+	 * Unit blocking.
+	 */
+	private final void restart() {
+
+		endNode = new Node(endNode.getxPosition(), endNode.getyPosition(), null);
+		startNode = new Node(startNode.getxPosition(), startNode.getyPosition(), endNode);
+
+		initMap();
+
+		for (Unit unit : Unit.UnitsArray) {
+			if (unit.isMoved())
+				map[unit.getxPosition()][unit.getyPosition()].setStatus(NodeStatus.UNVISITED);
+		}
+		startNode.setStatus(NodeStatus.OPEN);
+		endNode.setStatus(NodeStatus.UNVISITED);
+
+		map[endNode.getxPosition()][endNode.getyPosition()] = endNode;
+		map[startNode.getxPosition()][startNode.getyPosition()] = startNode;
+		expand(findClosestOpenNodeToEndNode());
 
 	}
 
 	private final void expand(Node expand) {
+		if (expand == null) {
+			restart();
+			return;
+		}
 
 		try {
 			map[expand.getxPosition() + 1][expand.getyPosition()].setParent(expand);
@@ -117,11 +156,10 @@ public class NodePath {
 
 		if (endNode.getParent() != null) {
 			createPath();
-
+			return;
 		} else {
 			expand.setStatus(NodeStatus.CLOSED);
 			expand(findClosestOpenNodeToEndNode());
-
 		}
 	}
 }

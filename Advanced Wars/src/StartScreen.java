@@ -65,10 +65,10 @@ public class StartScreen extends JFrame implements ActionListener {
 		String[] options = new String[2];
 		options[0] = new String("MOBA");
 		options[1] = new String("Large");
-		int save = JOptionPane.showOptionDialog(this.getContentPane(),"Select a Map","MAP SELECTION", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-		if(save == 0){
+		int map = JOptionPane.showOptionDialog(this.getContentPane(),"Select a Map","MAP SELECTION", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+		if(map == 0){
 			MapLoader.setMap("MOBA");
-		}else if(save == 1){
+		}else if(map == 1){
 			MapLoader.setMap("Large");
 		}
 		selectGame();
@@ -77,10 +77,10 @@ public class StartScreen extends JFrame implements ActionListener {
 		String[] options = new String[2];
 		options[0] = new String("Player vs. Player");
 		options[1] = new String("Player vs. AI");
-		int save = JOptionPane.showOptionDialog(this.getContentPane(),"","PLAYERS", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-		if(save == 0){
+		int gameplay = JOptionPane.showOptionDialog(this.getContentPane(),"","PLAYERS", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+		if(gameplay == 0){
 			System.out.println("PVP");
-		}else if(save == 1){
+		}else if(gameplay == 1){
 			System.out.println("Player vs AI");
 			MapEntityLoader.ai = true;
 			

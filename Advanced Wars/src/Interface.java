@@ -1,4 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -9,6 +12,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
+import layout.TableLayout;
 
 /**
  * acts as a display port for the classes Holds the mainFrame (Frame that holds
@@ -65,8 +70,8 @@ public class Interface {
 			if (Building.selectedBuilding == null) {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
-			} else
-				if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
+			} else if (Building.selectedBuilding != null
+					&& !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				blueTeamInfoContainer.removeAll();
 				blueTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
 			}
@@ -74,8 +79,8 @@ public class Interface {
 			if (Building.selectedBuilding == null) {
 				redTeamInfoContainer.removeAll();
 				redTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
-			} else
-				if (Building.selectedBuilding != null && !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
+			} else if (Building.selectedBuilding != null
+					&& !Building.selectedBuilding.getTeam().equals(unit.getTeam())) {
 				redTeamInfoContainer.removeAll();
 				redTeamInfoContainer.add(unit.infoPanel, BorderLayout.CENTER);
 			}
@@ -88,7 +93,71 @@ public class Interface {
 	}
 
 	public static void frame() {
+		class ResizeListener implements ComponentListener {
+
+			public void componentHidden(ComponentEvent e) {
+			}
+
+			public void componentMoved(ComponentEvent e) {
+			}
+
+			public void componentShown(ComponentEvent e) {
+			}
+
+			public void componentResized(ComponentEvent e) {
+				Dimension newSize = e.getComponent().getBounds().getSize();
+				System.out.println(newSize.getWidth() + ", " + newSize.getHeight());
+
+				double n = ((newSize.getWidth() - 440) / 20);
+
+				System.out.println(n);
+
+				for (int row = 0; row < 20; row++) {
+					for (int col = 0; col < 20; col++) {
+						Terrain.terrainArray[row][col].resizeSprites((int) n, (int) n);
+
+					}
+
+				}
+
+				Application.size = new double[][] {
+						{ 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 }, // Columns
+						{ 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 } // Rows;
+				};
+				;
+				Application.setTable();
+
+				/*
+				 * Application.size = new double[][] { { n, n, n, n, n, n, n, n,
+				 * n, n, n, n, n, n, n, n, n, n, n, n }, // Columns { n, n, n,
+				 * n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n } // Rows;
+				 * }; ;
+				 */
+
+				tilePanel.setSize((int) n * Application.WIDTH, (int) n * Application.HEIGHT);
+				unitPanel.setSize((int) n * Application.WIDTH, (int) n * Application.HEIGHT);
+				attackingSpritePanel.setSize((int) n * Application.WIDTH, (int) n * Application.HEIGHT);
+
+				tilePanel.setLayout(new TableLayout(Application.size));
+				unitPanel.setLayout(new TableLayout(Application.size));
+
+				attackingSpritePanel.setLayout(new TableLayout(Application.size));
+
+				tilePanel.revalidate();
+				tilePanel.repaint();
+
+				unitPanel.revalidate();
+				unitPanel.repaint();
+				layer.revalidate();
+				layer.repaint();
+
+			}
+
+		}
+
 		mainFrame = new JFrame("Advanced wars");
+		mainFrame.addComponentListener(new ResizeListener());
+
 		mainFrame.setSize(1080, 720);
 		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -125,9 +194,7 @@ public class Interface {
 
 	}
 
-	public static void close() {
-
-	}
+	static JLayeredPane layer;
 
 	public static void initalize() {
 		blueTeamInfo = new TeamStatPanel("Blue");
@@ -146,14 +213,14 @@ public class Interface {
 		turnPanels.add(TurnPanel.turnLabel);
 		turnPanels.add(TurnPanel.timeCounter);
 
-		JLayeredPane layer = new JLayeredPane();
+		layer = new JLayeredPane();
 
 		tilePanel = new TablePanel();
 		unitPanel = new TablePanel();
 		attackingSpritePanel = new TablePanel();
 
-		layer.add(Interface.tilePanel, new Integer(1));
-		layer.add(Interface.unitPanel, new Integer(10));
+		layer.add(Interface.tilePanel, new Integer(25));
+		layer.add(Interface.unitPanel, new Integer(50));
 		layer.add(Interface.attackingSpritePanel, new Integer(100));
 
 		Interface.mainFrame.add(layer, BorderLayout.CENTER);

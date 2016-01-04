@@ -3,7 +3,7 @@ public class PathFinders {
 
 	/**
 	 * Display the selected Units movement action, or attack action range
-	 * 
+	 * Can be used to attack or move.
 	 */
 	public static void selectedUnit() {
 		if (Unit.SelectedUnitActionPhase) {
@@ -24,6 +24,10 @@ public class PathFinders {
 		}
 	}
 
+	/**
+	 * Display the selected Units movement action, or attack action range
+	 * Can't be used to move or attack
+	 */
 	public static void Hover(Unit unit) {
 
 		if (Unit.SelectedUnitActionPhase) {

@@ -41,12 +41,12 @@ public class TeamStatPanel extends JPanel {
 		endTurn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
+				
 				TurnPanel.endTurn();
 				Unit.resetUnits();
 				Building.loopThroughProduction();
 				Building.regeneration();
-				AIUnit.moveAIs();
+				AIHub.FindTargets();
 
 			}
 		});

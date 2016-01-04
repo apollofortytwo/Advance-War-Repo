@@ -59,13 +59,8 @@ public class MapLoader {
 			}
 
 			return;
-		} else if (getMap() == "Large") {
-			Application.size = new double[][] {
-					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-							32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
-					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
-			};
-			;
+		} else if (getMap().equals("Large")) {
+
 			Terrain.fillScreenWithTerrain("GRASS");
 		}
 
@@ -81,6 +76,15 @@ public class MapLoader {
 			Application.size = new double[][] {
 					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
 					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
+			};
+			;
+			Application.setTable();
+			Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
+		} else if (map.equals("Large")) {
+			Application.size = new double[][] {
+					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+							32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
+					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
 			};
 			;
 			Application.setTable();
