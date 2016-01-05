@@ -71,23 +71,31 @@ public class MapLoader {
 	 *            the map to set
 	 */
 	public static void setMap(String map) {
+
 		MapLoader.map = map;
+
 		if (map.equals("MOBA")) {
-			Application.size = new double[][] {
-					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
-					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
+			Application.setTable(20, 20);
+			Application.calculateTileSize(Application.start.getHeight());
+
+			double f = ((double) Application.tileSize);
+			Application.size = new double[][] { { f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f }, // Columns
+					{ f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f } // Rows;
 			};
 			;
-			Application.setTable();
+
 			Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
 		} else if (map.equals("Large")) {
+			Application.setTable(42, 21);
+			Application.calculateTileSize(Application.start.getHeight());
+			double f = ((double) Application.tileSize);
 			Application.size = new double[][] {
-					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
-							32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 }, // Columns
-					{ 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 } // Rows;
+
+					{ f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f,
+							f, f, f, f, f, f, f, f, f }, // Columns
+					{ f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f } // Rows;
 			};
 			;
-			Application.setTable();
 			Terrain.terrainArray = new Terrain[Application.size[0].length][Application.size[1].length];
 		}
 

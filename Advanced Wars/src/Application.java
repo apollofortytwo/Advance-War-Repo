@@ -15,6 +15,12 @@ public class Application {
 	public static double[][] size;
 	public static int WIDTH, HEIGHT;
 	public static StartScreen start;
+	public static int tileSize;
+	
+	public static void calculateTileSize(int height){
+		tileSize = (height - 30) / HEIGHT - 1; 
+		System.out.println(tileSize);
+	}
 
 	public static void attackingSound() {
 		try {
@@ -31,6 +37,7 @@ public class Application {
 	}
 
 	public static void game() {
+		
 		System.out.println("Loading");
 
 		start.dispose();
@@ -70,9 +77,9 @@ public class Application {
 		}
 	}
 
-	public static void setTable() {
-		WIDTH = size[0].length;
-		HEIGHT = size[1].length;
+	public static void setTable(int width, int height) {
+		WIDTH = width;
+		HEIGHT = height;
 	}
 
 }

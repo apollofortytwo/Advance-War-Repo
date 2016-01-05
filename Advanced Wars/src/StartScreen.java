@@ -27,6 +27,7 @@ public class StartScreen extends JFrame implements ActionListener {
 	public StartScreen() {
 		this.setSize(1080, 720);
 		this.setLayout(null);
+		this.setExtendedState(JFrame.MAXIMIZED_VERT);
 		setup();
 		this.setVisible(true);
 	}

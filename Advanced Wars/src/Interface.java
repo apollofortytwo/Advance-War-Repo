@@ -97,8 +97,10 @@ public class Interface {
 		mainFrame = new JFrame("Advanced wars");
 
 		mainFrame.setSize(1080, 720);
+		
 		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-
+		mainFrame.setExtendedState(JFrame.MAXIMIZED_VERT);
+		
 		mainFrame.addWindowListener(new WindowAdapter() {
 
 			@Override
