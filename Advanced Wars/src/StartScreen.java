@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,66 +28,51 @@ public class StartScreen extends JFrame implements ActionListener {
 	public StartScreen() {
 		this.setSize(1080, 720);
 		this.setLayout(null);
-		this.setExtendedState(JFrame.MAXIMIZED_VERT);
+		this.setExtendedState(Frame.MAXIMIZED_VERT);
 		setup();
 		this.setVisible(true);
-	}
-
-	public void setup() {
-		title();
-		options();
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("NEW")) {
 			mapSelect();
-		} else if(arg0.getActionCommand().equals("LOAD")){
+		} else if (arg0.getActionCommand().equals("LOAD")) {
 			loadFile();
 		}
 
 	}
-	private void loadFile(){
+
+	private void loadFile() {
 		JFileChooser fc = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("ADVANCED WARS SAVE FILE", "save", "save");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+				"ADVANCED WARS SAVE FILE", "save", "save");
 		fc.setFileFilter(filter);
 		fc.showOpenDialog(this);
 		if (fc.getSelectedFile() != null) {
-			LoadGame.file = fc.getSelectedFile();
+			LoadFile.file = fc.getSelectedFile();
 			try {
-				new LoadGame();
+				new LoadFile();
 			} catch (Exception e) {
 			}
 		} else {
 			return;
 		}
 	}
-	private void mapSelect(){
+
+	private void mapSelect() {
 		String[] options = new String[2];
 		options[0] = new String("MOBA");
 		options[1] = new String("Large");
-		int map = JOptionPane.showOptionDialog(this.getContentPane(),"Select a Map","MAP SELECTION", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-		if(map == 0){
+		int map = JOptionPane.showOptionDialog(this.getContentPane(),
+				"Select a Map", "MAP SELECTION", 0,
+				JOptionPane.INFORMATION_MESSAGE, null, options, null);
+		if (map == 0) {
 			MapLoader.setMap("MOBA");
-		}else if(map == 1){
+		} else if (map == 1) {
 			MapLoader.setMap("Large");
 		}
 		selectGame();
-	}
-	private void selectGame(){
-		String[] options = new String[2];
-		options[0] = new String("Player vs. Player");
-		options[1] = new String("Player vs. AI");
-		int gameplay = JOptionPane.showOptionDialog(this.getContentPane(),"","PLAYERS", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-		if(gameplay == 0){
-			System.out.println("PVP");
-		}else if(gameplay == 1){
-			System.out.println("Player vs AI");
-			MapEntityLoader.ai = true;
-			
-		}
-		Application.game();
 	}
 
 	private void options() {
@@ -111,6 +97,29 @@ public class StartScreen extends JFrame implements ActionListener {
 		optionsPanel.add(loadGame);
 
 		this.add(optionsPanel, BorderLayout.CENTER);
+
+	}
+
+	private void selectGame() {
+		String[] options = new String[2];
+		options[0] = new String("Player vs. Player");
+		options[1] = new String("Player vs. AI");
+		int gameplay = JOptionPane.showOptionDialog(this.getContentPane(), "",
+				"PLAYERS", 0, JOptionPane.INFORMATION_MESSAGE, null, options,
+				null);
+		if (gameplay == 0) {
+			System.out.println("PVP");
+		} else if (gameplay == 1) {
+			System.out.println("Player vs AI");
+			MapEntityLoader.ai = true;
+
+		}
+		Application.game();
+	}
+
+	public void setup() {
+		title();
+		options();
 
 	}
 

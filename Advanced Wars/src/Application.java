@@ -1,4 +1,3 @@
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -12,34 +11,10 @@ import javax.sound.sampled.FloatControl;
  *
  */
 public class Application {
-	public static double[][] size;
-	public static int WIDTH, HEIGHT;
-	public static StartScreen start;
-	public static int tileSize;
+
+	static Audio bgm;
 	
-	public static void calculateTileSize(int height){
-		tileSize = (height - 30) / HEIGHT - 1; 
-		System.out.println(tileSize);
-	}
-
-	public static void attackingSound() {
-		try {
-			AudioInputStream audioIn = AudioSystem
-					.getAudioInputStream(Application.class.getResource("Attacking_Sound.wav"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioIn);
-
-			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-25.0f);
-			clip.start();
-		} catch (Exception e) {
-		}
-	}
-
 	public static void game() {
-		
-		System.out.println("Loading");
-
 		start.dispose();
 
 		Interface.frame();
@@ -55,31 +30,18 @@ public class Application {
 
 		TurnPanel.endTurn();
 		TurnPanel.turnPanelStart();
-
-		playMusic();
+		
+		bgm = new Audio("war.wav");
+		bgm.getAudio().loop(Clip.LOOP_CONTINUOUSLY);
+		
+		bgm.getAudio().start();
 
 	}
-
 	public static void main(String[] args) {
 		start = new StartScreen();
 	}
+	
 
-	public static void playMusic() {
-		try {
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(Application.class.getResource("war.wav"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioIn);
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-25.0f);
-			clip.start();
-		} catch (Exception e) {
-		}
-	}
-
-	public static void setTable(int width, int height) {
-		WIDTH = width;
-		HEIGHT = height;
-	}
+	public static StartScreen start;
 
 }

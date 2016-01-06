@@ -1,3 +1,4 @@
+/war.wav
 /Attacking_Sound.wav
 /BlueArtillery.png
 /BlueArtillery_Sleep.png
@@ -34,8 +35,6 @@
 /Trees.png
 /Trees_Blue.png
 /Trees_Red.png
-/UnitInfoPanel$1.class
-/UnitInfoPanel$2.class
 /Water.png
 /Water_Blue.png
 /Water_Red.png
@@ -54,7 +53,6 @@
 /InfoLabel.class
 /InitateAI.class
 /Interface$1.class
-/Interface$1ResizeListener.class
 /Interface.class
 /LoadGame.class
 /MapEntityLoader.class
@@ -78,4 +76,12 @@
 /TurnPanelLabel.class
 /Unit.class
 /UnitInfo.class
+/UnitInfoPanel$1.class
+/UnitInfoPanel$2.class
 /UnitInfoPanel.class
+/AI/
+/Load.class
+/Audio.class
+/LoadFile.class
+/WinScreen.class
+/AIHub$1.class
