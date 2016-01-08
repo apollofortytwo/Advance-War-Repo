@@ -14,6 +14,8 @@ public class Explosion {
 	private Timer timer;
 	int count = 0;
 
+	private Image sprite;
+
 	public Explosion(int x, int y) {
 		sprite = new ImageIcon(getClass().getResource("Explosion.png"))
 				.getImage();
@@ -49,7 +51,5 @@ public class Explosion {
 		timer.start();
 
 	}
-
-	private Image sprite;
 
 }

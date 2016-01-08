@@ -45,19 +45,6 @@ public class LoadFile {
 
 	}
 
-	private void loadUnits(Save save) {
-		for (SaveObject x : save.getUnits()) {
-			Unit t = new Unit(x.x, x.y, x.type, x.team);
-			t.info.health = x.health;
-			t.setMoved(x.moved);
-			t.setAttacked(x.attacked);
-
-			t.updateHealthLabel();
-			t.infoPanel.updateHealth();
-
-		}
-	}
-
 	private void loadBuildings(Save save) {
 		for (SaveObject x : save.getBuildings()) {
 			if (x.captured) {
@@ -80,6 +67,19 @@ public class LoadFile {
 				t.buildingPanel.updateInfo();
 				t.healthLabel.updateHealth(t.health);
 			}
+		}
+	}
+
+	private void loadUnits(Save save) {
+		for (SaveObject x : save.getUnits()) {
+			Unit t = new Unit(x.x, x.y, x.type, x.team);
+			t.info.health = x.health;
+			t.setMoved(x.moved);
+			t.setAttacked(x.attacked);
+
+			t.updateHealthLabel();
+			t.infoPanel.updateHealth();
+
 		}
 	}
 

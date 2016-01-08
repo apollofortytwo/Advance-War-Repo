@@ -119,7 +119,7 @@ class Unit extends JLabel implements MouseListener {
 					getHealthLabel().updateHealth(this.info.health);
 
 					Unit.selectedUnit.gray();
-					new Explosion(this.xPosition,this.yPosition);
+					new Explosion(this.xPosition, this.yPosition);
 
 					Unit.selectedUnit.moved = true;
 					Unit.selectedUnit.attacked = true;
@@ -161,6 +161,10 @@ class Unit extends JLabel implements MouseListener {
 
 	public String getEnemy() {
 		return enemy;
+	}
+
+	public HealthLabel getHealthLabel() {
+		return healthLabel;
 	}
 
 	public UnitInfo getInfo() {
@@ -299,6 +303,10 @@ class Unit extends JLabel implements MouseListener {
 			this.enemy = "Blue";
 	}
 
+	public void setHealthLabel(HealthLabel healthLabel) {
+		this.healthLabel = healthLabel;
+	}
+
 	public void setMoved(boolean moved) {
 		this.moved = moved;
 	}
@@ -317,14 +325,6 @@ class Unit extends JLabel implements MouseListener {
 
 	public void updateHealthLabel() {
 		getHealthLabel().setText(Integer.toString(this.info.health));
-	}
-
-	public HealthLabel getHealthLabel() {
-		return healthLabel;
-	}
-
-	public void setHealthLabel(HealthLabel healthLabel) {
-		this.healthLabel = healthLabel;
 	}
 
 }

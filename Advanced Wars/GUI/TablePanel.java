@@ -13,17 +13,15 @@ import layout.TableLayout;
  */
 public class TablePanel extends JPanel {
 
-	public static double[][] size;
-	
-	public static int WIDTH, HEIGHT;
-	
 	public static void setTable(int width, int height) {
 		WIDTH = width;
 		HEIGHT = height;
 	}
-	
-	
-	
+
+	public static double[][] size;
+
+	public static int WIDTH, HEIGHT;
+
 	public TablePanel() {
 		this.setSize(32 * HEIGHT, 32 * WIDTH);
 		this.setLayout(new TableLayout(TablePanel.size));

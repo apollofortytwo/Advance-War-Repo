@@ -4,10 +4,28 @@ import java.util.List;
 
 public class AIHub {
 
-	public static final void FindTargets() {
-		if (WinScreen.hasWon()) {
-			return;
+	public static final void action() {
+		findTargets();
+		moveUnits();
+		attack();
+		Interface.endTurn();
+	}
+
+	private static final void attack() {
+		for (AIUnit x : aiUnits) {
+			x.potentialEnemy();
+			x.closestEnemy();
+			if (x.inRange()) {
+				x.attack();
+				if (WinScreen.hasWon()) {
+					return;
+				}
+			}
 		}
+	}
+
+	private static final void findTargets() {
+
 		;
 
 		for (AIUnit x : aiUnits) {
@@ -15,15 +33,10 @@ public class AIHub {
 			x.closestEnemy();
 			x.sortEnemy();
 		}
-		moveUnits();
+
 	}
 
 	private static final void moveUnits() {
-		try {
-			Thread.sleep(100); // 100 milliseconds is one second.
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
 
 		for (int i = 0; i <= aiUnits.size(); i++) {
 
@@ -35,23 +48,14 @@ public class AIHub {
 				path = selected.findPath(new Point(selected.pointInRange().x,
 						selected.pointInRange().y));
 				// Apply Path
+
 				selected.move(path);
 			} catch (Exception e) {
 
 			}
 
 		}
-		attack();
-	}
 
-	private static final void attack() {
-		for (AIUnit x : aiUnits) {
-			x.potentialEnemy();
-			x.closestEnemy();
-			if (x.inRange()) {
-				x.attack();
-			}
-		}
 	}
 
 	private static final AIUnit nextToMove() {

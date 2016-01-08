@@ -38,19 +38,12 @@ public class TeamStatPanel extends JPanel {
 		this.add(infantry);
 		this.add(helicopter);
 		this.add(endTurn);
+
 		endTurn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				WinScreen.hasWon();
-				TurnPanel.endTurn();
-				Unit.resetUnits();
-				Building.loopThroughProduction();
-				Building.regeneration();
-				if(TurnPanel.turnText.equals("Red")){
-					AIHub.FindTargets();
-				}
-				
+				Interface.endTurn();
 
 			}
 		});

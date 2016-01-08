@@ -22,6 +22,7 @@ public class TurnPanel {
 		Terrain.restoreAllTileStatus();
 		updateTurnLabel();
 	}
+
 	/**
 	 * Sets the information for the first round gives the proper color to the
 	 * current Turn and start's the time for the game
@@ -36,6 +37,7 @@ public class TurnPanel {
 			turnLabel.setBackground(Color.red);
 		}
 	}
+
 	/**
 	 * starts the timer for the amount of time a player can do actions
 	 */
@@ -67,6 +69,7 @@ public class TurnPanel {
 		turnsElapsedLabel.setText("TURN: " + Integer.toString(turnsElapsed));
 		System.out.println("Current turn: " + turnText);
 	}
+
 	public static TurnPanelLabel turnLabel = new TurnPanelLabel();
 	public static TurnPanelLabel timeCounter = new TurnPanelLabel();
 

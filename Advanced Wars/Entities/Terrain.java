@@ -49,6 +49,8 @@ public class Terrain extends JLabel implements MouseListener {
 
 	public boolean isCapturable = false;
 
+	public static int tileSize;
+
 	/**
 	 * JLabel that is added to the cell of tilePanel Terrain has an image and a
 	 * set of qualities for the Terrain Terrain can change it's color to
@@ -109,8 +111,6 @@ public class Terrain extends JLabel implements MouseListener {
 	public int getYPosition() {
 		return yPosition;
 	}
-
-	public static int tileSize;
 
 	/**
 	 * Allow for unit to move on this Terrains location

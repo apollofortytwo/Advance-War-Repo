@@ -1,4 +1,3 @@
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ public class AIUnit extends Unit {
 
 	int movetoX;
 	int movetoY;
-	
+
 	private Unit bestEnemy;
 	private int turnsToReachEnemy;
 	private int turnsToGetInRangeOfEnemy;
@@ -23,6 +22,19 @@ public class AIUnit extends Unit {
 
 		AIHub.aiUnits.add(this);
 
+	}
+
+	void attack() {
+		this.bestEnemy.info.health = this.bestEnemy.info.health
+				- this.info.attack;
+		new Explosion(bestEnemy.getxPosition(), bestEnemy.getyPosition());
+
+		this.bestEnemy.getHealthLabel()
+				.updateHealth(this.bestEnemy.info.health);
+
+		if (this.bestEnemy.info.health <= 0) {
+			this.bestEnemy.dead();
+		}
 	}
 
 	private void canMoveTo(List<Node> list, int movement) {
@@ -62,7 +74,7 @@ public class AIUnit extends Unit {
 				this.bestEnemy = z;
 			}
 		}
-		
+
 	}
 
 	List<Node> findPath(Point cord) {
@@ -90,16 +102,8 @@ public class AIUnit extends Unit {
 		return turnsToGetInRangeOfEnemy;
 	}
 
-	private int tilesToRangeOfEnemy(int mx, int my, int ex, int ey) {
-		return Math.abs(mx - ex) + Math.abs(my - ey) - +this.info.attack;
-	}
-
 	public int getTurnsToReachEnemy() {
 		return turnsToReachEnemy;
-	}
-
-	private int tilesToEnemy(int mx, int my, int ex, int ey) {
-		return Math.abs(mx - ex) + Math.abs(my - ey);
 	}
 
 	private boolean hasMovedUnit(int x, int y) {
@@ -110,6 +114,17 @@ public class AIUnit extends Unit {
 					return true;
 				}
 			}
+		}
+		return false;
+	}
+
+	boolean inRange() {
+		if (tilesToEnemy(this.getxPosition(), this.getyPosition(),
+				this.bestEnemy.getxPosition(), this.bestEnemy.getyPosition()) <= this.info.range) {
+			System.out.println("ATTACKING FROM: " + this.getxPosition() + ", "
+					+ this.getyPosition());
+			return true;
+
 		}
 		return false;
 	}
@@ -142,26 +157,6 @@ public class AIUnit extends Unit {
 		Interface.unitPanel.repaint();
 	}
 
-	boolean inRange(){
-		if(tilesToEnemy(this.getxPosition(), this.getyPosition(), this.bestEnemy.getxPosition(), this.bestEnemy.getyPosition()) <= this.info.range){
-			System.out.println("ATTACKING FROM: " + this.getxPosition() +", " + this.getyPosition());
-			return true;
-			
-		}
-		return false;
-	}
-	
-	void attack(){
-		this.bestEnemy.info.health = this.bestEnemy.info.health - this.info.attack;
-		new Explosion(bestEnemy.getxPosition(), bestEnemy.getyPosition());
-		
-		this.bestEnemy.getHealthLabel().updateHealth(this.bestEnemy.info.health);
-
-		if (this.bestEnemy.info.health <= 0) {
-			this.bestEnemy.dead();
-		}
-	}
-
 	public Point pointInRange() {
 		points = new ArrayList<Point>();
 		pointsInRange(this.bestEnemy.getxPosition(),
@@ -174,8 +169,8 @@ public class AIUnit extends Unit {
 					best = point;
 				} else if (this.tilesToEnemy(point.x, point.y, this
 						.getBestEnemy().getxPosition(), this.bestEnemy
-						.getyPosition()) >= this.tilesToEnemy(best.x,
-						best.y, this.getBestEnemy().getxPosition(),
+						.getyPosition()) >= this.tilesToEnemy(best.x, best.y,
+						this.getBestEnemy().getxPosition(),
 						this.bestEnemy.getyPosition())) {
 
 					best = point;
@@ -281,7 +276,7 @@ public class AIUnit extends Unit {
 				if (similarEnemy >= 3) {
 
 					if (this.getPotentialEnemy().size() > 2) {
-						
+
 						this.getPotentialEnemy().remove(this.getBestEnemy());
 						this.closestEnemy();
 					}
@@ -290,6 +285,14 @@ public class AIUnit extends Unit {
 			}
 
 		}
+	}
+
+	private int tilesToEnemy(int mx, int my, int ex, int ey) {
+		return Math.abs(mx - ex) + Math.abs(my - ey);
+	}
+
+	private int tilesToRangeOfEnemy(int mx, int my, int ex, int ey) {
+		return Math.abs(mx - ex) + Math.abs(my - ey) - +this.info.attack;
 	}
 
 }

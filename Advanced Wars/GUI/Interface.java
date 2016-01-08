@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -19,8 +18,8 @@ import javax.swing.WindowConstants;
  * @author ApolloFortyTwo
  *
  */
-public class Interface {
 
+public class Interface {
 	public static void addBuildingInfo(Building building) {
 		System.out.println(building.getTeam());
 		if (building.getTeam().equals("Blue")) {
@@ -53,7 +52,6 @@ public class Interface {
 		redTeamInfoContainer.repaint();
 
 	}
-
 	public static void addUnitInfo(Unit unit) {
 
 		if (unit.getTeam().equals("Blue")) {
@@ -83,6 +81,19 @@ public class Interface {
 		redTeamInfoContainer.repaint();
 
 	}
+
+	public static void endTurn() {
+		WinScreen.hasWon();
+		TurnPanel.endTurn();
+		Unit.resetUnits();
+		Building.loopThroughProduction();
+		Building.regeneration();
+		if (TurnPanel.turnText.equals("Red")) {
+			AIHub.action();
+		}
+
+	}
+
 	public static void frame() {
 
 		mainFrame = new JFrame("Advanced wars");
@@ -90,7 +101,6 @@ public class Interface {
 		mainFrame.setSize(1080, 720);
 
 		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		mainFrame.setExtendedState(Frame.MAXIMIZED_VERT);
 
 		mainFrame.addWindowListener(new WindowAdapter() {
 
@@ -127,6 +137,7 @@ public class Interface {
 		mainFrame.setVisible(true);
 
 	}
+
 	public static void initalize() {
 		blueTeamInfo = new TeamStatPanel("Blue");
 
@@ -183,6 +194,7 @@ public class Interface {
 		redTeamInfoContainer.revalidate();
 		redTeamInfoContainer.repaint();
 	}
+
 	public static void restore() {
 
 		Unit.UnSelectedUnit();
@@ -201,6 +213,7 @@ public class Interface {
 	}
 
 	public static JFrame mainFrame;
+
 	public static TablePanel tilePanel;
 
 	public static TablePanel unitPanel;

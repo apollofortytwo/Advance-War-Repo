@@ -2,19 +2,17 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+
 //"Attacking_Sound.wav"
 
-public class Audio{
+public class Audio {
 
 	private Clip audio;
-	
 
-
-	public Audio(String path){
+	public Audio(String path) {
 		try {
 			AudioInputStream audioIn = AudioSystem
-					.getAudioInputStream(Application.class
-							.getResource(path));
+					.getAudioInputStream(Application.class.getResource(path));
 			audio = AudioSystem.getClip();
 			audio.open(audioIn);
 
@@ -24,7 +22,7 @@ public class Audio{
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public Clip getAudio() {
 		return audio;
 	}
@@ -32,7 +30,5 @@ public class Audio{
 	public void setAudio(Clip audio) {
 		this.audio = audio;
 	}
-	
-	
-	
+
 }
