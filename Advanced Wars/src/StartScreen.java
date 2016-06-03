@@ -45,8 +45,7 @@ public class StartScreen extends JFrame implements ActionListener {
 
 	private void loadFile() {
 		JFileChooser fc = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter(
-				"ADVANCED WARS SAVE FILE", "save", "save");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("ADVANCED WARS SAVE FILE", "save", "save");
 		fc.setFileFilter(filter);
 		fc.showOpenDialog(this);
 		if (fc.getSelectedFile() != null) {
@@ -61,17 +60,9 @@ public class StartScreen extends JFrame implements ActionListener {
 	}
 
 	private void mapSelect() {
-		String[] options = new String[2];
-		options[0] = new String("MOBA");
-		options[1] = new String("Large");
-		int map = JOptionPane.showOptionDialog(this.getContentPane(),
-				"Select a Map", "MAP SELECTION", 0,
-				JOptionPane.INFORMATION_MESSAGE, null, options, null);
-		if (map == 0) {
-			MapLoader.setMap("MOBA");
-		} else if (map == 1) {
-			MapLoader.setMap("Large");
-		}
+
+		MapLoader.setMap("MOBA");
+
 		selectGame();
 	}
 
@@ -104,9 +95,8 @@ public class StartScreen extends JFrame implements ActionListener {
 		String[] options = new String[2];
 		options[0] = new String("Player vs. Player");
 		options[1] = new String("Player vs. AI");
-		int gameplay = JOptionPane.showOptionDialog(this.getContentPane(), "",
-				"PLAYERS", 0, JOptionPane.INFORMATION_MESSAGE, null, options,
-				null);
+		int gameplay = JOptionPane.showOptionDialog(this.getContentPane(), "", "PLAYERS", 0,
+				JOptionPane.INFORMATION_MESSAGE, null, options, null);
 		if (gameplay == 0) {
 			System.out.println("PVP");
 		} else if (gameplay == 1) {
@@ -130,6 +120,15 @@ public class StartScreen extends JFrame implements ActionListener {
 		title.setBackground(Color.white);
 
 		title.setBounds(0, 0, 1080, 100);
+		
+		JLabel produce = new JLabel("Made by: Apollo Forty Two");
+		produce.setFont(new Font("Serifs", Font.PLAIN, 10));
+		produce.setHorizontalAlignment(SwingConstants.CENTER);
+		produce.setBackground(Color.white);
+		produce.setBounds(0, 600, 1000, 100);
+		
+		this.add(produce);
+		
 		this.add(title);
 
 	}

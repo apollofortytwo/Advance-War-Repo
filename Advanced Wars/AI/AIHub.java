@@ -26,8 +26,6 @@ public class AIHub {
 
 	private static final void findTargets() {
 
-		;
-
 		for (AIUnit x : aiUnits) {
 			x.potentialEnemy();
 			x.closestEnemy();

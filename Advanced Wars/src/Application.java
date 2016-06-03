@@ -35,6 +35,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		start = new StartScreen();
+		int[][] grid = new int[5][3];
+		System.out.println(grid[0].length);
 	}
 
 	static Audio bgm;
